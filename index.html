@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>آزمون نگرش سیاسی | نقشه اقتصاد، آزادی/اقتدار و دموکراسی</title>
+  <meta name="description" content="آزمون نگرش سیاسی فارسی با نقشه دوبعدی اقتصاد و آزادی/اقتدار به‌همراه امتیاز هنجارهای دموکراتیک. اجرا در مرورگر و بدون نیاز به سرور." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="Political Attitudes Map" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="application-name" content="نقشه نگرش‌های سیاسی" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fa_IR" />
+  <meta property="og:site_name" content="نقشه نگرش‌های سیاسی" />
+  <meta property="og:title" content="آزمون نگرش سیاسی | نقشه اقتصاد، آزادی/اقتدار و دموکراسی" />
+  <meta property="og:description" content="پرسشنامه سیاسی فارسی با خروجی نقشه اقتصادی-فرهنگی و امتیاز هنجارهای دموکراتیک." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="آزمون نگرش سیاسی | نقشه اقتصاد، آزادی/اقتدار و دموکراسی" />
+  <meta name="twitter:description" content="پرسشنامه سیاسی فارسی با خروجی نقشه اقتصادی-فرهنگی و امتیاز هنجارهای دموکراتیک." />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <link rel="alternate" hreflang="fa-IR" href="./" />
+  <link rel="alternate" hreflang="x-default" href="./" />
+
+  <!-- Main stylesheet (single source of truth) -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "نقشه نگرش‌های سیاسی",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "fa-IR",
+      "description": "ابزار پرسشنامه‌ای برای نمایش تقریبی نگرش سیاسی روی محور اقتصاد، آزادی/اقتدار و هنجارهای دموکراتیک.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brandRow">
+          <img class="logoMark" src="logo-mark.svg" alt="لوگوی نقشه نگرش‌های سیاسی" width="28" height="28" />
+          <h1>نقشه‌ی نگرش‌های سیاسی</h1>
+        </div>
+        <p>اقتصاد + فرهنگ/اقتدار + هنجارهای دموکراتیک — نسخه‌ی مینیمال و بی‌طرف</p>
+      </div>
+
+      <div class="topActions">
+        <button class="btn small" id="btnMethod" type="button">روش و شفافیت</button>
+        <button class="btn small danger" id="btnQuickExit" type="button" title="باز کردن یک صفحه‌ی بی‌خطر">خروج سریع</button>
+        <button class="btn small" id="btnReset" type="button">پاک کردن و شروع دوباره</button>
+      </div>
+    </header>
+
+    <!-- Intro Screen -->
+    <section class="screen active" id="screenIntro">
+      <div class="grid">
+        <div class="card">
+          <h2 class="introTitle">این آزمون چه می‌کند؟</h2>
+          <p class="introText">
+            چند گزاره‌ی کوتاه می‌بینید و با مقیاس ۵گزینه‌ای پاسخ می‌دهید. در پایان:
+            <strong>جایگاه شما روی یک نقشه‌ی ۲بعدی</strong> + یک امتیاز جدا برای
+            <strong>هنجارهای دموکراتیک</strong> نمایش داده می‌شود.
+          </p>
+
+          <ul class="introList">
+            <li>زمان تقریبی: <strong>۳ تا ۶ دقیقه</strong></li>
+            <li>لحن: بی‌طرف، بدون برچسب و بدون قضاوت</li>
+            <li>اگر مطمئن نیستید: گزینه‌ی <strong>«نظری ندارم»</strong> منطقی است</li>
+            <li>اگر سؤال حساسی بود: می‌توانید <strong>«می‌گذرم»</strong> را بزنید</li>
+          </ul>
+
+          <div class="footerNote">
+            این ابزار «تشخیص قطعی» نیست. یک تصویر کلی و تقریبی می‌دهد.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="notice">
+            <details open>
+              <summary>محرمانگی و داده‌ها (خیلی کوتاه و صادقانه)</summary>
+              <p>
+                در این نسخه، پاسخ‌ها <strong>داخل مرورگر</strong> نگهداری و محاسبه می‌شود (sessionStorage) و
+                هیچ فرم/لاگ تحلیلیِ اختصاصی در خود برنامه وجود ندارد.
+                <br /><br />
+                با این حال، اگر این صفحه را از یک وب‌سایت باز کرده‌اید، ممکن است مثل همه‌ی وب‌سایت‌ها
+                <strong>لاگ‌های فنی معمول</strong> (مثل IP در سطح سرور) وجود داشته باشد.
+                برای حساسیت بیشتر می‌توانید از حالت «ناشناس/Private» مرورگر استفاده کنید.
+              </p>
+            </details>
+          </div>
+
+          <div class="rowWrap mt14">
+            <button class="btn primary" id="btnStart" type="button">شروع آزمون</button>
+            <button class="btn" id="btnContinue" type="button">ادامه‌ی آزمونِ نیمه‌تمام</button>
+          </div>
+
+          <div class="footerNote muted small">
+            نکته: «ادامه» فقط وقتی فعال است که در همین سشن قبلاً چیزی پاسخ داده باشید.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Screen -->
+    <section class="screen" id="screenQuiz">
+      <div class="quizHeader">
+        <div class="progressWrap">
+          <div class="progressBar" aria-label="نوار پیشرفت">
+            <div class="progressFill" id="progressFill"></div>
+          </div>
+          <div class="progressText" id="progressText">۰٪</div>
+        </div>
+      </div>
+
+      <div class="card qCard" role="group" aria-labelledby="qText">
+        <div class="qMeta">
+          <div class="qid" id="qidBadge">Q</div>
+          <div class="qCount" id="qCount">سؤال ۱ از ۱</div>
+        </div>
+
+        <h3 class="qText" id="qText">...</h3>
+
+        <div class="opts" id="opts" role="radiogroup" aria-label="گزینه‌های پاسخ">
+          <!-- options injected -->
+        </div>
+
+        <div class="quizFooter">
+          <div class="rowWrap">
+            <button class="btn" id="btnPrev" type="button">قبلی</button>
+            <button class="btn" id="btnSkip" type="button">می‌گذرم</button>
+            <button class="btn primary" id="btnNext" type="button">بعدی</button>
+          </div>
+          <div class="hint" id="hint">
+            اگر مطمئن نیستید «نظری ندارم» انتخاب خوبی است.
+          </div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+      </div>
+
+      <div class="rowWrap rowEnd mt12">
+        <button class="btn primary" id="btnFinish" type="button">نمایش نتیجه</button>
+      </div>
+    </section>
+
+    <!-- Results Screen -->
+    <section class="screen" id="screenResults">
+      <div class="resultsGrid">
+        <div class="card">
+          <div class="plotWrap">
+            <div class="muted small">نقشه‌ی دوبعدی (X اقتصاد، Y آزادی/اقتدار)</div>
+            <svg id="plot" class="plot" viewBox="0 0 360 360" aria-label="نمودار جایگاه روی نقشه"></svg>
+            <div class="muted" id="quadrantText">...</div>
+          </div>
+
+          <div class="scoreBox">
+            <div class="pill">
+              <div class="k">اقتصاد (X)</div>
+              <div class="v" id="scoreX">0</div>
+              <div class="muted small">-100 (چپ) ← → +100 (راست)</div>
+            </div>
+            <div class="pill">
+              <div class="k">آزادی/اقتدار (Y)</div>
+              <div class="v" id="scoreY">0</div>
+              <div class="muted small">-100 (آزادی‌خواه) ← → +100 (اقتدارگرا)</div>
+            </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="k">حمایت از هنجارهای دموکراتیک (۰ تا ۱۰۰)</div>
+            <div class="v"><span id="scoreD">0</span></div>
+            <div class="meter blue" aria-label="نوار امتیاز هنجارهای دموکراتیک">
+              <div id="demoFill"></div>
+            </div>
+            <div class="muted small mt8">
+              این امتیاز درباره‌ی اصولی مثل انتخابات رقابتی، حقوق متهم، استقلال دادگاه و نظارت عمومی است.
+            </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="k">شاخص نگرانی از محرمانگی (فقط برای اطمینان نتیجه)</div>
+            <div class="v"><span id="scorePrivacy">0</span></div>
+            <div class="meter yellow" aria-label="نوار نگرانی از محرمانگی">
+              <div id="privacyFill"></div>
+            </div>
+            <div class="muted small mt8">
+              این شاخص «حقیقت‌سنجی» نیست. فقط می‌گوید ممکن است بعضی پاسخ‌ها محتاطانه‌تر شده باشد.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="confidence" id="confidenceBox"></div>
+
+          <div class="explain" id="explain"></div>
+
+          <div class="footerNote">
+            <strong>یادآوری:</strong> این نتیجه تقریبی است و «تشخیص قطعی» نیست.
+          </div>
+
+          <div class="rowWrap mt14">
+            <button class="btn primary" id="btnRetake" type="button">انجام دوباره</button>
+            <button class="btn" id="btnBackToQuiz" type="button">بازگشت به سوال‌ها</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology Modal -->
+    <dialog id="methodModal">
+      <div class="modalHead">
+        <div class="fw900">روش و شفافیت</div>
+        <button class="btn small" id="btnCloseMethod" type="button">بستن</button>
+      </div>
+      <div class="modalBody" id="methodBody"></div>
+    </dialog>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

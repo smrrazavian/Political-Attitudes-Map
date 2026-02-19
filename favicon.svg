@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Favicon">
+  <title>Favicon</title>
+
+  <!-- Background so it reads well as a favicon -->
+  <rect x="4" y="4" width="120" height="120" rx="26" fill="#0B1220"/>
+
+  <!-- Mark in light color -->
+  <g stroke="#E6EEFC" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="14" y="14" width="100" height="100" rx="22" stroke-width="6" opacity="0.95"/>
+    <circle cx="64" cy="64" r="38" stroke-width="5" opacity="0.9"/>
+    <path d="M64 30V98" stroke-width="5" opacity="0.95"/>
+    <path d="M30 64H98" stroke-width="5" opacity="0.95"/>
+    <path d="M44 40V46 M84 40V46 M44 82V88 M84 82V88" stroke-width="3" opacity="0.55"/>
+    <path d="M40 44H46 M82 44H88 M40 84H46 M82 84H88" stroke-width="3" opacity="0.55"/>
+  </g>
+
+  <circle cx="64" cy="64" r="6" fill="#E6EEFC" opacity="0.95"/>
+</svg>

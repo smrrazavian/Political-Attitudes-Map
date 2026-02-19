@@ -1,0 +1,80 @@
+{
+  "meta": {
+    "version": "1.2-fa",
+    "title_fa": "پرسشنامه‌ی نگرش‌های سیاسی (اقتصاد + فرهنگ/اقتدار + هنجارهای دموکراتیک)",
+    "lang": "fa",
+    "direction": "rtl",
+    "likert": ["کاملاً مخالفم", "مخالفم", "نظری ندارم", "موافقم", "کاملاً موافقم"],
+    "values": [-2, -1, 0, 1, 2],
+    "quality": {
+      "speeding_avg_seconds_threshold": 1.1,
+      "notes_fa": "نشانه‌های کیفیت داده فقط برای «اطمینان نتیجه» هستند، نه قضاوت یا دروغ‌سنجی."
+    },
+    "disclaimer_fa": "این آزمون یک ساده‌سازی از باورهای چندبُعدی است. نتیجه تقریبی است و تشخیص قطعی/علمیِ هویت سیاسی نیست.",
+    "consistency_pairs": [
+      { "a": "E02", "b": "E11", "rule": "opposite_extremes", "axis": "economy" },
+      { "a": "E04", "b": "E13", "rule": "opposite_extremes", "axis": "economy" },
+
+      { "a": "A03", "b": "A10", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A04", "b": "A11", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A05", "b": "A12", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A06", "b": "A13", "rule": "opposite_extremes", "axis": "culture_authority" }
+    ]
+  },
+  "items": [
+    { "id": "E01", "text_fa": "دولت باید با مالیاتِ بیشتر از درآمدهای خیلی بالا، فاصلهٔ طبقاتی را کمتر کند.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E02", "text_fa": "اگر مجبور به انتخاب باشیم، تأمینِ حداقلِ معیشت برای همه مهم‌تر از پایین نگه داشتنِ مالیات‌هاست.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E03", "text_fa": "برای بعضی کالاهای ضروری (مثل دارو)، مقررات روی قیمت می‌تواند لازم باشد.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E04", "text_fa": "حقوق و امنیتِ شغلیِ کارگر باید حتی اگر هزینهٔ تولید را بالا ببرد، حمایت شود.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E05", "text_fa": "بهتر است آموزش و درمانِ پایه تا حد ممکن برای همه قابل‌دسترسی و کم‌هزینه باشد.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E06", "text_fa": "دولت باید با انحصارهای بزرگ و رانت‌های اقتصادی سخت‌گیرانه برخورد کند.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E07", "text_fa": "حفاظت از محیط‌زیست می‌تواند ارزشِ محدود کردنِ بعضی فعالیت‌های اقتصادی را داشته باشد.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+
+    { "id": "E08", "text_fa": "رقابتِ آزاد معمولاً بهتر از دخالت دولت می‌تواند کیفیت و قیمت را بهتر کند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E09", "text_fa": "برای رشد اقتصادی، بهتر است مقرراتِ کسب‌وکار کمتر شود حتی اگر برخی حمایت‌ها کاهش پیدا کند.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E10", "text_fa": "خصوصی‌سازیِ درست و شفاف می‌تواند خدمات را بهتر از مدیریت دولتی ارائه کند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E11", "text_fa": "اگر مجبور به انتخاب باشیم، پایین نگه داشتنِ مالیات‌ها مهم‌تر از گسترشِ خدمات رفاهی است.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E12", "text_fa": "اختلاف درآمد زیاد همیشه بد نیست؛ اگر حاصلِ تلاش و مهارت باشد قابل‌قبول است.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E13", "text_fa": "بازار کار باید انعطاف‌پذیر باشد، حتی اگر امنیت شغلیِ بعضی افراد کمتر شود.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E14", "text_fa": "کمک‌های دولتی بهتر است محدود و هدفمند باشد تا وابستگی ایجاد نکند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+
+    { "id": "A01", "text_fa": "آزادی بیان باید شامل دیدگاه‌های ناخوشایند هم باشد، تا وقتی تهدید و خشونت نباشد.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A02", "text_fa": "حریم خصوصی مردم باید حفظ شود، حتی اگر نظارتِ بیشتر به امنیت کمک کند.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A03", "text_fa": "قانون باید حقوقِ برابرِ زنان و مردان را در کار و زندگی عمومی تضمین کند.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A04", "text_fa": "افراد باید در انتخاب پوششِ خود آزاد باشند، تا وقتی به دیگران آسیب نمی‌زنند.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A05", "text_fa": "تبعیض در کار و خدمات عمومی علیه افراد با گرایش یا هویتِ جنسی متفاوت نباید قانونی باشد.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A06", "text_fa": "اقلیت‌های قومی/زبانی باید بتوانند زبان مادری‌شان را در آموزش یا رسانه حفظ و استفاده کنند.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A07", "text_fa": "دولت نباید وارد روابط خصوصیِ رضایتمندانه‌ی بزرگسالان شود.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A08", "text_fa": "برای امنیت و نظم، گاهی لازم است آزادی‌های فردی محدود شود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A09", "text_fa": "دولت باید بتواند تجمعات و اعتراضات را سخت‌گیرانه کنترل کند تا بی‌نظمی ایجاد نشود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A10", "text_fa": "سیاست‌گذاری باید نقش‌های سنتیِ خانواده (مثل نان‌آور/خانه‌دار) را تشویق کند.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A11", "text_fa": "قانون باید در فضای عمومی درباره «رفتار و پوشش» سخت‌گیرانه‌تر باشد تا اخلاق عمومی حفظ شود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A12", "text_fa": "قانون بهتر است ازدواج را فقط بین زن و مرد به رسمیت بشناسد.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A13", "text_fa": "برای حفظ وحدت، بهتر است اقلیت‌ها با فرهنگ غالب سازگار شوند تا تفاوت‌ها پررنگ نشود.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A14", "text_fa": "در بحران‌ها، تصمیم‌گیری متمرکز و سریع از مشارکت گسترده مهم‌تر است.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "D01", "text_fa": "انتخابات باید واقعی، رقابتی و با امکان تغییر قدرت برگزار شود.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D02", "text_fa": "تغییر دولت باید فقط از راه رأی مردم و روند قانونی انجام شود.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D03", "text_fa": "قوه قضاییه باید مستقل باشد و بتواند جلوی سوءاستفاده‌ی قدرت را بگیرد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D04", "text_fa": "رسانه‌ها باید بتوانند آزادانه از حکومت و نهادهای قدرتمند انتقاد کنند.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D05", "text_fa": "همه شهروندان باید در برابر قانون حقوق برابر داشته باشند، حتی اگر متعلق به اقلیت باشند.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D06", "text_fa": "حکومت باید شفاف باشد و امکان نظارت عمومی و گزارش‌گری مستقل وجود داشته باشد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+
+    { "id": "D07", "text_fa": "اگر رهبران کشور تصمیم بگیرند، دیگر نیازی به انتخابات و پارلمان قوی نیست.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
+    { "id": "D08", "text_fa": "در بعضی شرایط، حکومت نظامی می‌تواند راه حلِ مناسبی باشد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
+
+    { "id": "QC01", "text_fa": "برای اطمینان از دقت پاسخ‌ها، لطفاً در این سؤال گزینه «موافقم» را انتخاب کنید.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "attention_check" },
+
+    { "id": "INF01", "text_fa": "بهتر است برای تصمیم‌های مهم کشور، هر ماه یک بار «شیر یا خط» بیندازیم تا سریع‌تر جلو برویم.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "infrequency" }
+  ]
+}

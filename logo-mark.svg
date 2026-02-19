@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Political map logo mark">
+  <title>Political Map Logo</title>
+  <defs>
+    <style>
+      .stroke { stroke: currentColor; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- Outer container (neutral, minimal) -->
+  <rect x="8" y="8" width="112" height="112" rx="22" class="stroke" stroke-width="6" opacity="0.95"/>
+
+  <!-- Compass circle -->
+  <circle cx="64" cy="64" r="40" class="stroke" stroke-width="5" opacity="0.9"/>
+
+  <!-- Axes -->
+  <path d="M64 28V100" class="stroke" stroke-width="5" opacity="0.95"/>
+  <path d="M28 64H100" class="stroke" stroke-width="5" opacity="0.95"/>
+
+  <!-- Subtle grid ticks (non-directional) -->
+  <path d="M44 38V46 M84 38V46 M44 82V90 M84 82V90" class="stroke" stroke-width="3" opacity="0.55"/>
+  <path d="M38 44H46 M82 44H90 M38 84H46 M82 84H90" class="stroke" stroke-width="3" opacity="0.55"/>
+
+  <!-- “Placement” dot (centered for neutrality) -->
+  <circle cx="64" cy="64" r="6" fill="currentColor" opacity="0.95"/>
+</svg>
