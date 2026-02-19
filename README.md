@@ -21,9 +21,11 @@ The app is fully static and runs in the browser. No backend is required.
 ## Project Structure
 
 - `index.html` - Main page/UI
+- `index.en.html` - English UI (Persian remains default)
 - `app.js` - App logic, scoring, navigation, quality checks
 - `styles.css` - External stylesheet
 - `questions.fa.json` - Question bank and scoring weights
+- `questions.en.json` - English question bank and scoring weights
 
 ## Requirements
 
@@ -47,6 +49,14 @@ python3 -m http.server 8080
 Then open:
 
 `http://localhost:8080`
+
+Default page is Persian:
+
+`http://localhost:8080/index.html`
+
+English page:
+
+`http://localhost:8080/index.en.html`
 
 On some systems use:
 

@@ -102,7 +102,7 @@
     .introTitle{ font-size:20px; font-weight:800; margin:0 0 10px; line-height:1.45; }
     .introText{ margin:0; color:var(--muted); font-size:15px; line-height:1.8; }
     .introList{
-      margin:12px 0 0; padding:0 18px 0 0; color:var(--muted);
+      margin:12px 0 0; padding-inline-start:18px; color:var(--muted);
       font-size:14px;
       line-height:1.9;
     }
@@ -122,7 +122,7 @@
       overflow:hidden; flex:1;
     }
     .progressFill{ height:100%; width:0%; background:rgba(122,167,255,.65); }
-    .progressText{ font-size:13px; color:var(--muted); min-width:124px; text-align:left; }
+    .progressText{ font-size:13px; color:var(--muted); min-width:124px; text-align:start; }
 
     .qCard{ padding:18px; }
     .qMeta{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:12px; }
@@ -218,7 +218,7 @@
     .meter.yellow > div{ background:rgba(255,200,120,.55); }
 
     .explain .line{
-      border-right:3px solid rgba(122,167,255,.5);
+      border-inline-start:3px solid rgba(122,167,255,.5);
       padding:6px 10px; margin:8px 0;
       background:rgba(255,255,255,.02);
       border-radius:12px;
@@ -259,7 +259,7 @@
     }
     .modalBody h4{ color:var(--text); margin:14px 0 8px; }
     .modalBody p{ margin:10px 0; }
-    .modalBody ul{ margin:8px 0 0; padding:0 18px 0 0; }
+    .modalBody ul{ margin:8px 0 0; padding-inline-start:18px; }
     .modalBody li{ margin:6px 0; }
     .small{ font-size:12.5px; }
     .muted{ color:var(--muted); }

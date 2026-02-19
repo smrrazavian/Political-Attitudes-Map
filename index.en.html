@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Political Attitudes Test | Economy, Freedom/Authority, Democracy</title>
+  <meta name="description" content="English political attitudes quiz with a 2D map (economy + freedom/authority) and a democratic norms score." />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="author" content="Political Attitudes Map" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="application-name" content="Political Attitudes Map" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:site_name" content="Political Attitudes Map" />
+  <meta property="og:title" content="Political Attitudes Test | Economy, Freedom/Authority, Democracy" />
+  <meta property="og:description" content="Political questionnaire with a 2D map and democratic norms scoring." />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Political Attitudes Test | Economy, Freedom/Authority, Democracy" />
+  <meta name="twitter:description" content="Political questionnaire with a 2D map and democratic norms scoring." />
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="shortcut icon" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <link rel="alternate" hreflang="fa-IR" href="index.html" />
+  <link rel="alternate" hreflang="en" href="index.en.html" />
+  <link rel="alternate" hreflang="x-default" href="index.html" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Political Attitudes Map",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Any",
+      "inLanguage": "en",
+      "description": "A questionnaire tool that maps political attitudes across economy, authority/liberty, and democratic norms.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="brandRow">
+          <img class="logoMark" src="logo-mark.svg" alt="Political Attitudes Map logo" width="28" height="28" />
+          <h1>Political Attitudes Map</h1>
+        </div>
+        <p>Economy + Culture/Authority + Democratic Norms, neutral minimal edition</p>
+      </div>
+
+      <div class="topActions">
+        <a class="btn small" href="index.html" lang="fa" hreflang="fa">فارسی</a>
+        <button class="btn small" id="btnMethod" type="button">Method & Transparency</button>
+        <button class="btn small danger" id="btnQuickExit" type="button" title="Open a neutral page">Quick Exit</button>
+        <button class="btn small" id="btnReset" type="button">Reset</button>
+      </div>
+    </header>
+
+    <section class="screen active" id="screenIntro">
+      <div class="grid">
+        <div class="card">
+          <h2 class="introTitle">What does this test do?</h2>
+          <p class="introText">
+            You answer short statements on a 5-point scale. At the end you get:
+            <strong>your position on a 2D map</strong> plus a separate
+            <strong>democratic norms score</strong>.
+          </p>
+
+          <ul class="introList">
+            <li>Estimated time: <strong>3 to 6 minutes</strong></li>
+            <li>Tone: neutral, no labels, no judgment</li>
+            <li>If unsure: <strong>Neutral</strong> is a valid choice</li>
+            <li>If a question feels sensitive: use <strong>Skip</strong></li>
+          </ul>
+
+          <div class="footerNote">
+            This is not a definitive diagnosis. It provides an approximate profile.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="notice">
+            <details open>
+              <summary>Privacy and data (short and clear)</summary>
+              <p>
+                In this version, answers are stored and processed <strong>in your browser</strong> (sessionStorage).
+                There is no built-in form submission or custom analytics logging.
+                <br /><br />
+                If this page is served from a website, normal technical server logs
+                <strong>(such as IP logs)</strong> may still exist like any website.
+                For higher privacy, use your browser's Private/Incognito mode.
+              </p>
+            </details>
+          </div>
+
+          <div class="rowWrap mt14">
+            <button class="btn primary" id="btnStart" type="button">Start Quiz</button>
+            <button class="btn" id="btnContinue" type="button">Continue Previous Session</button>
+          </div>
+
+          <div class="footerNote muted small">
+            Note: Continue is enabled only when you already answered something in this session.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" id="screenQuiz">
+      <div class="quizHeader">
+        <div class="progressWrap">
+          <div class="progressBar" aria-label="Progress bar">
+            <div class="progressFill" id="progressFill"></div>
+          </div>
+          <div class="progressText" id="progressText">0%</div>
+        </div>
+      </div>
+
+      <div class="card qCard" role="group" aria-labelledby="qText">
+        <div class="qMeta">
+          <div class="qid" id="qidBadge">Q</div>
+          <div class="qCount" id="qCount">Question 1 of 1</div>
+        </div>
+
+        <h3 class="qText" id="qText">...</h3>
+
+        <div class="opts" id="opts" role="radiogroup" aria-label="Answer options"></div>
+
+        <div class="quizFooter">
+          <div class="rowWrap">
+            <button class="btn" id="btnPrev" type="button">Previous</button>
+            <button class="btn" id="btnSkip" type="button">Skip</button>
+            <button class="btn primary" id="btnNext" type="button">Next</button>
+          </div>
+          <div class="hint" id="hint">If unsure, choosing Neutral is fine.</div>
+        </div>
+
+        <div class="toast" id="toast"></div>
+      </div>
+
+      <div class="rowWrap rowEnd mt12">
+        <button class="btn primary" id="btnFinish" type="button">Show Results</button>
+      </div>
+    </section>
+
+    <section class="screen" id="screenResults">
+      <div class="resultsGrid">
+        <div class="card">
+          <div class="plotWrap">
+            <div class="muted small">2D map (X Economy, Y Liberty/Authority)</div>
+            <svg id="plot" class="plot" viewBox="0 0 360 360" aria-label="Position map chart"></svg>
+            <div class="muted" id="quadrantText">...</div>
+          </div>
+
+          <div class="scoreBox">
+            <div class="pill">
+              <div class="k">Economy (X)</div>
+              <div class="v" id="scoreX">0</div>
+              <div class="muted small">-100 (Left) ← → +100 (Right)</div>
+            </div>
+            <div class="pill">
+              <div class="k">Liberty/Authority (Y)</div>
+              <div class="v" id="scoreY">0</div>
+              <div class="muted small">-100 (Libertarian) ← → +100 (Authoritarian)</div>
+            </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="k">Support for Democratic Norms (0 to 100)</div>
+            <div class="v"><span id="scoreD">0</span></div>
+            <div class="meter blue" aria-label="Democratic norms score meter">
+              <div id="demoFill"></div>
+            </div>
+            <div class="muted small mt8">
+              This score reflects support for principles like competitive elections, due process, judicial independence, and oversight.
+            </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="k">Privacy Concern Indicator (confidence only)</div>
+            <div class="v"><span id="scorePrivacy">0</span></div>
+            <div class="meter yellow" aria-label="Privacy concern meter">
+              <div id="privacyFill"></div>
+            </div>
+            <div class="muted small mt8">
+              This is not a truth detector. It only indicates possible response caution.
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="confidence" id="confidenceBox"></div>
+          <div class="explain" id="explain"></div>
+
+          <div class="footerNote">
+            <strong>Reminder:</strong> this is approximate and not a definitive diagnosis.
+          </div>
+
+          <div class="rowWrap mt14">
+            <button class="btn primary" id="btnRetake" type="button">Retake</button>
+            <button class="btn" id="btnBackToQuiz" type="button">Back to Questions</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <dialog id="methodModal">
+      <div class="modalHead">
+        <div class="fw900">Method & Transparency</div>
+        <button class="btn small" id="btnCloseMethod" type="button">Close</button>
+      </div>
+      <div class="modalBody" id="methodBody"></div>
+    </dialog>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

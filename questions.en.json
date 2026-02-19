@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "version": "1.2-en",
+    "title_en": "Political Attitudes Questionnaire (Economy + Culture/Authority + Democratic Norms)",
+    "lang": "en",
+    "direction": "ltr",
+    "likert": ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],
+    "values": [-2, -1, 0, 1, 2],
+    "quality": {
+      "speeding_avg_seconds_threshold": 1.1,
+      "notes_en": "Data-quality signals are only for result confidence, not judgment or lie detection."
+    },
+    "disclaimer_en": "This test is a simplification of multidimensional beliefs. Results are approximate and not a definitive/scientific political identity diagnosis.",
+    "consistency_pairs": [
+      { "a": "E02", "b": "E11", "rule": "opposite_extremes", "axis": "economy" },
+      { "a": "E04", "b": "E13", "rule": "opposite_extremes", "axis": "economy" },
+      { "a": "A03", "b": "A10", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A04", "b": "A11", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A05", "b": "A12", "rule": "opposite_extremes", "axis": "culture_authority" },
+      { "a": "A06", "b": "A13", "rule": "opposite_extremes", "axis": "culture_authority" }
+    ]
+  },
+  "items": [
+    { "id": "E01", "text_en": "Government should reduce class inequality by taxing very high incomes more.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E02", "text_en": "If we must choose, guaranteeing a minimum livelihood for everyone is more important than keeping taxes low.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E03", "text_en": "For some essential goods (like medicine), price regulation can be necessary.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E04", "text_en": "Worker wages and job security should be protected even if production costs rise.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E05", "text_en": "Basic education and healthcare should be widely accessible and affordable.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E06", "text_en": "Government should deal firmly with large monopolies and economic rent-seeking.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E07", "text_en": "Environmental protection can justify limiting some economic activities.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+
+    { "id": "E08", "text_en": "Free competition usually improves quality and prices better than government intervention.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E09", "text_en": "For economic growth, business regulation should be reduced even if some protections decline.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E10", "text_en": "Well-designed, transparent privatization can deliver services better than state management.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E11", "text_en": "If we must choose, keeping taxes low is more important than expanding welfare services.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E12", "text_en": "Large income differences are not always bad if they reflect effort and skill.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E13", "text_en": "The labor market should be flexible even if some people have less job security.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+    { "id": "E14", "text_en": "Government assistance should be limited and targeted to avoid dependency.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
+
+    { "id": "A01", "text_en": "Freedom of speech should include unpleasant views as long as there is no threat or violence.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A02", "text_en": "People's privacy should be protected, even if stronger surveillance may improve security.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A03", "text_en": "Law should guarantee equal rights for women and men in work and public life.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A04", "text_en": "People should be free to choose their clothing as long as they do not harm others.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A05", "text_en": "Discrimination in work and public services against people with different sexual orientation or gender identity should not be legal.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A06", "text_en": "Ethnic/linguistic minorities should be able to preserve and use their mother tongue in education or media.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A07", "text_en": "Government should not interfere in consensual private relationships between adults.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "A08", "text_en": "For security and order, it is sometimes necessary to limit individual freedoms.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A09", "text_en": "Government should be able to strictly control gatherings and protests to prevent disorder.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A10", "text_en": "Public policy should encourage traditional family roles (e.g., breadwinner/homemaker).", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A11", "text_en": "Laws in public spaces should be stricter about behavior and dress to preserve public morality.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A12", "text_en": "The law should recognize marriage only between a man and a woman.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A13", "text_en": "To preserve unity, minorities should adapt to the dominant culture rather than emphasize differences.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+    { "id": "A14", "text_en": "In crises, centralized and fast decision-making is more important than broad participation.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
+
+    { "id": "D01", "text_en": "Elections should be real, competitive, and allow transfer of power.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D02", "text_en": "Government should change only through people's votes and legal process.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D03", "text_en": "The judiciary should be independent and able to prevent abuse of power.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D04", "text_en": "Media should be able to criticize the government and powerful institutions freely.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D05", "text_en": "All citizens should have equal rights before the law, including minorities.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D06", "text_en": "Government should be transparent, with public oversight and independent reporting.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
+    { "id": "D07", "text_en": "If national leaders decide, strong elections and parliament are no longer necessary.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
+    { "id": "D08", "text_en": "In some situations, military rule can be an appropriate solution.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
+
+    { "id": "QC01", "text_en": "For quality control, please choose 'Agree' for this question.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "attention_check" },
+    { "id": "INF01", "text_en": "For major national decisions, we should flip a coin once a month to move faster.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "infrequency" }
+  ]
+}

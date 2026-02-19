@@ -24,6 +24,125 @@ const STORAGE = {
   currentIndex: "polmap_v1_currentIndex"
 };
 
+const IS_EN = (document.documentElement.lang || "").toLowerCase().startsWith("en");
+const STR = {
+  fa: {
+    qCount: "سؤال {current} از {total}",
+    next: "بعدی",
+    end: "پایان",
+    progressAnswered: "{pct}٪ پاسخ داده شده",
+    lowData: "پاسخ‌های کافی ثبت نشده است (حدود {pct}٪). برای نتیجهٔ قابل‌اتکا بهتر است بیشتر پاسخ دهید.",
+    someSkips: "برخی سؤال‌ها بدون پاسخ مانده‌اند (حدود {pct}٪ پاسخ داده شده).",
+    attentionFailed: "سؤالِ توجه مطابق دستور پاسخ داده نشده است.",
+    infrequencyFlag: "یک پاسخِ نامعمول دیده شد (می‌تواند نشانه‌ی بی‌دقتی باشد).",
+    speeding: "سرعت پاسخ‌دهی خیلی بالا بوده است؛ ممکن است نتیجه با دقت کمتر باشد.",
+    straightlining: "الگوی پاسخ‌ها خیلی یکنواخت است (اکثر گزینه‌ها یکسان انتخاب شده‌اند).",
+    inconsistentPair: "در چند پاسخ، سازگاری پایین دیده شد (جفت: {a} و {b}).",
+    privacyHigh: "نگرانی از محرمانگی بالا گزارش شده؛ ممکن است پاسخ‌ها محتاطانه‌تر شده باشد.",
+    privacyMid: "مقداری نگرانی از محرمانگی گزارش شده است.",
+    econRight: "راست اقتصادی",
+    econLeft: "چپ اقتصادی",
+    auth: "اقتدارگرا",
+    liberty: "آزادی‌خواه",
+    endReached: "به پایان رسیدید. می‌توانید «نمایش نتیجه» را بزنید.",
+    skipped: "این سؤال رد شد. هر زمان خواستید می‌توانید برگردید و پاسخ دهید.",
+    needMinAnswers: "برای محاسبه نتیجه، بهتر است حداقل {min}٪ سؤال‌ها را پاسخ دهید.\nالان حدود {now}٪ پاسخ داده‌اید.",
+    quadrantText: "نقطه‌ی شما در این نقشه نزدیک‌تر به ناحیه‌ی «{label}» است.",
+    lowConfidence: "نتیجه با اطمینان پایین",
+    midConfidence: "نتیجه با اطمینان متوسط",
+    answered: "پاسخ داده‌شده: {pct}٪",
+    secPerQ: "میانگین زمان هر پاسخ: حدود {sec} ثانیه",
+    rerunHint: "پیشنهاد: اگر برایتان مهم است، یک بار دیگر در محیط آرام‌تر/Private انجام دهید.",
+    nothingToContinue: "چیزی برای ادامه وجود ندارد. «شروع آزمون» را بزنید.",
+    unsureHint: "اگر مطمئن نیستید «نظری ندارم» را بزنید یا «می‌گذرم» را انتخاب کنید.",
+    endQuestions: "پایان سوال‌ها. می‌توانید «نمایش نتیجه» را بزنید.",
+    loadErr: "خطا در بارگذاری فایل‌ها. لطفاً وجود questions.fa.json را کنار index.html بررسی کنید.",
+    scorePrivacyEmpty: "—",
+    axisLeft: "چپ اقتصادی",
+    axisRight: "راست اقتصادی",
+    axisTop: "اقتدارگرا",
+    axisBottom: "آزادی‌خواه",
+    methodologyTitle: "روش و شفافیت",
+    methodologyHtml: `
+      <h4>این ابزار چه چیزی را می‌سنجد؟</h4>
+      <p>برای ساده‌سازی، دو محور استفاده می‌کنیم: <strong>اقتصاد</strong> و <strong>فرهنگ/اقتدار</strong>. این فقط یک خلاصه‌سازی است.</p>
+      <h4>چرا «هنجارهای دموکراتیک» جداست؟</h4>
+      <p>یک امتیاز جدا برای حمایت از اصولی مثل انتخابات رقابتی، استقلال دادگاه، حقوق متهم، و امکان نظارت عمومی داریم (۰ تا ۱۰۰).</p>
+      <h4>امتیازدهی چطور کار می‌کند؟</h4>
+      <ul>
+        <li>گزینه‌ها از -۲ تا +۲ کد می‌شوند.</li>
+        <li>هر سؤال وزن دارد (wx, wy, wd).</li>
+        <li>امتیازها نرمال می‌شوند: X/Y در بازه -۱۰۰..+۱۰۰، دموکراسی ۰..۱۰۰.</li>
+      </ul>
+      <h4>کنترل کیفیت و اطمینان نتیجه</h4>
+      <p>نشانه‌هایی مثل توجه، الگوی پاسخ، سازگاری و سرعت فقط برای برچسب اطمینان به‌کار می‌روند، نه قضاوت.</p>
+      <h4>محرمانگی</h4>
+      <p>پاسخ‌ها در این نسخه در مرورگر نگهداری می‌شود (sessionStorage).</p>
+    `
+  },
+  en: {
+    qCount: "Question {current} of {total}",
+    next: "Next",
+    end: "Finish",
+    progressAnswered: "{pct}% answered",
+    lowData: "Not enough answers were recorded (about {pct}%). For a more reliable result, answer more questions.",
+    someSkips: "Some questions were left unanswered (about {pct}% answered).",
+    attentionFailed: "The attention-check item was not answered as instructed.",
+    infrequencyFlag: "An unusual response pattern was detected (could indicate low attention).",
+    speeding: "Response speed was very high; result reliability may be lower.",
+    straightlining: "Responses are overly uniform (most answers are identical).",
+    inconsistentPair: "Lower consistency was detected for a response pair ({a} and {b}).",
+    privacyHigh: "High privacy concern was reported; answers may be more cautious.",
+    privacyMid: "Some privacy concern was reported.",
+    econRight: "Economic Right",
+    econLeft: "Economic Left",
+    auth: "Authoritarian",
+    liberty: "Libertarian",
+    endReached: "You reached the end. You can now click “Show Results”.",
+    skipped: "This question was skipped. You can always come back and answer it.",
+    needMinAnswers: "To compute results, answer at least {min}% of questions.\nYou have answered about {now}% so far.",
+    quadrantText: "Your position on this map is closer to: “{label}”.",
+    lowConfidence: "Low-confidence result",
+    midConfidence: "Medium-confidence result",
+    answered: "Answered: {pct}%",
+    secPerQ: "Average time per answer: about {sec} seconds",
+    rerunHint: "Tip: if this matters to you, retake it in a calmer/private setting.",
+    nothingToContinue: "There is nothing to continue yet. Click “Start Quiz”.",
+    unsureHint: "If unsure, choose “Neutral” or use “Skip”.",
+    endQuestions: "You reached the final question. You can click “Show Results”.",
+    loadErr: "Failed to load files. Make sure questions.en.json/questions.fa.json are next to index.html.",
+    scorePrivacyEmpty: "—",
+    axisLeft: "Economic Left",
+    axisRight: "Economic Right",
+    axisTop: "Authoritarian",
+    axisBottom: "Libertarian",
+    methodologyTitle: "Method & Transparency",
+    methodologyHtml: `
+      <h4>What does this tool measure?</h4>
+      <p>It simplifies political attitudes into two axes: <strong>Economy</strong> and <strong>Culture/Authority</strong>.</p>
+      <h4>Why a separate democratic norms score?</h4>
+      <p>Support for democratic principles (competitive elections, judicial independence, due process, public oversight) is scored separately from 0 to 100.</p>
+      <h4>How scoring works</h4>
+      <ul>
+        <li>Choices are encoded from -2 to +2.</li>
+        <li>Each item has a weight (wx, wy, wd).</li>
+        <li>Scores are normalized: X/Y in -100..+100 and democracy in 0..100.</li>
+      </ul>
+      <h4>Quality checks</h4>
+      <p>Signals such as attention checks, response patterns, consistency and speed only affect confidence labels, not judgment.</p>
+      <h4>Privacy</h4>
+      <p>In this version, answers are stored in the browser session (sessionStorage).</p>
+    `
+  }
+};
+
+function t(key, vars = {}) {
+  const dict = IS_EN ? STR.en : STR.fa;
+  const fallback = STR.fa[key] ?? key;
+  const template = dict[key] ?? fallback;
+  return template.replace(/\{(\w+)\}/g, (_, k) => String(vars[k] ?? ""));
+}
+
 let DATA = null;
 let ORDERED = [];
 let idx = 0; // current question index in ORDERED
@@ -69,8 +188,10 @@ function screen(name) {
 }
 
 async function loadData() {
-  const res = await fetch("questions.fa.json", { cache: "no-store" });
-  if (!res.ok) throw new Error("Failed to load questions.fa.json");
+  const preferred = IS_EN ? "questions.en.json" : "questions.fa.json";
+  let res = await fetch(preferred, { cache: "no-store" });
+  if (!res.ok && IS_EN) res = await fetch("questions.fa.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to load question file");
   const j = await res.json();
   if (!j?.meta?.likert || !j?.meta?.values || !Array.isArray(j?.items)) {
     throw new Error("Invalid questions.fa.json structure");
@@ -156,8 +277,8 @@ function renderCurrent() {
   if (!item) return;
 
   el("qidBadge").textContent = item.id;
-  el("qCount").textContent = `سؤال ${idx + 1} از ${ORDERED.length}`;
-  el("qText").textContent = item.text_fa;
+  el("qCount").textContent = t("qCount", { current: idx + 1, total: ORDERED.length });
+  el("qText").textContent = IS_EN ? (item.text_en || item.text_fa) : item.text_fa;
 
   const answers = getAnswers();
   const currentIdx = Number.isFinite(answers[item.id]) ? answers[item.id] : null;
@@ -229,7 +350,7 @@ function renderCurrent() {
 
   // nav buttons
   el("btnPrev").disabled = idx === 0;
-  el("btnNext").textContent = idx === ORDERED.length - 1 ? "پایان" : "بعدی";
+  el("btnNext").textContent = idx === ORDERED.length - 1 ? t("end") : t("next");
   el("btnFinish").disabled = false;
 
   persistIndex();
@@ -247,7 +368,7 @@ function updateProgress() {
 
   const pct = total ? Math.round((answered / total) * 100) : 0;
   el("progressFill").style.width = `${pct}%`;
-  el("progressText").textContent = `${pct}٪ پاسخ داده شده`;
+  el("progressText").textContent = t("progressAnswered", { pct });
 
   // Continue button availability (intro)
   const btnContinue = el("btnContinue");
@@ -349,13 +470,13 @@ function qualitySignals(data, answers, finishedAtMs) {
     signals.push({
       code: "too_many_skips",
       weight: 3,
-      msg: `پاسخ‌های کافی ثبت نشده است (حدود ${Math.round(ratio * 100)}٪). برای نتیجهٔ قابل‌اتکا بهتر است بیشتر پاسخ دهید.`
+      msg: t("lowData", { pct: Math.round(ratio * 100) })
     });
   } else if (ratio < 0.9) {
     signals.push({
       code: "some_skips",
       weight: 1,
-      msg: `برخی سؤال‌ها بدون پاسخ مانده‌اند (حدود ${Math.round(ratio * 100)}٪ پاسخ داده شده).`
+      msg: t("someSkips", { pct: Math.round(ratio * 100) })
     });
   }
 
@@ -365,7 +486,7 @@ function qualitySignals(data, answers, finishedAtMs) {
     const ai = answers[att.id];
     // If user skipped this item, don't mark as failed attention.
     if (Number.isFinite(ai) && ai !== 3) {
-      signals.push({ code: "attention_failed", weight: 3, msg: "سؤالِ توجه مطابق دستور پاسخ داده نشده است." });
+      signals.push({ code: "attention_failed", weight: 3, msg: t("attentionFailed") });
     }
   }
 
@@ -375,7 +496,7 @@ function qualitySignals(data, answers, finishedAtMs) {
     const ai = answers[inf.id];
     if (Number.isFinite(ai)) {
       const v = idxToValue(ai);
-      if (v >= 1) signals.push({ code: "infrequency_flag", weight: 2, msg: "یک پاسخِ نامعمول دیده شد (می‌تواند نشانه‌ی بی‌دقتی باشد)." });
+      if (v >= 1) signals.push({ code: "infrequency_flag", weight: 2, msg: t("infrequencyFlag") });
     }
   }
 
@@ -388,7 +509,7 @@ function qualitySignals(data, answers, finishedAtMs) {
 
   const threshold = data.meta?.quality?.speeding_avg_seconds_threshold ?? 1.1;
   if (secPerQ < threshold) {
-    signals.push({ code: "speeding", weight: 2, msg: "سرعت پاسخ‌دهی خیلی بالا بوده است؛ ممکن است نتیجه با دقت کمتر باشد." });
+    signals.push({ code: "speeding", weight: 2, msg: t("speeding") });
   }
 
   // Straight-lining on scored items
@@ -401,7 +522,7 @@ function qualitySignals(data, answers, finishedAtMs) {
     }
     const maxSame = Math.max(...counts.values());
     if ((maxSame / scored.length) > 0.86) {
-      signals.push({ code: "straightlining", weight: 2, msg: "الگوی پاسخ‌ها خیلی یکنواخت است (اکثر گزینه‌ها یکسان انتخاب شده‌اند)." });
+      signals.push({ code: "straightlining", weight: 2, msg: t("straightlining") });
     }
   }
 
@@ -416,7 +537,7 @@ function qualitySignals(data, answers, finishedAtMs) {
     if (p.rule === "opposite_extremes") {
       // For opposite-worded item pairs, same-direction endorsement/disagreement is inconsistent.
       if ((va >= 1 && vb >= 1) || (va <= -1 && vb <= -1)) {
-        signals.push({ code: `inconsistent_${p.a}_${p.b}`, weight: 1, msg: `در چند پاسخ، سازگاری پایین دیده شد (جفت: ${p.a} و ${p.b}).` });
+        signals.push({ code: `inconsistent_${p.a}_${p.b}`, weight: 1, msg: t("inconsistentPair", { a: p.a, b: p.b }) });
       }
     }
   }
@@ -424,9 +545,9 @@ function qualitySignals(data, answers, finishedAtMs) {
   // Privacy concern -> confidence only (NOT inference)
   const ps = privacyConcernScore(data, answers);
   if (ps != null && ps >= 70) {
-    signals.push({ code: "privacy_high", weight: 2, msg: "نگرانی از محرمانگی بالا گزارش شده؛ ممکن است پاسخ‌ها محتاطانه‌تر شده باشد." });
+    signals.push({ code: "privacy_high", weight: 2, msg: t("privacyHigh") });
   } else if (ps != null && ps >= 45) {
-    signals.push({ code: "privacy_mid", weight: 1, msg: "مقداری نگرانی از محرمانگی گزارش شده است." });
+    signals.push({ code: "privacy_mid", weight: 1, msg: t("privacyMid") });
   }
 
   const totalWeight = signals.reduce((s, x) => s + x.weight, 0);
@@ -439,12 +560,26 @@ function qualitySignals(data, answers, finishedAtMs) {
 
 // ---------- Results: Map + explanations ----------
 function quadrantLabel(x, y) {
-  const econ = x >= 0 ? "راست اقتصادی" : "چپ اقتصادی";
-  const soc  = y >= 0 ? "اقتدارگرا" : "آزادی‌خواه";
+  const econ = x >= 0 ? t("econRight") : t("econLeft");
+  const soc  = y >= 0 ? t("auth") : t("liberty");
   return `${soc} + ${econ}`;
 }
 
 function explanationLines(x, y, d) {
+  if (IS_EN) {
+    const lines = [];
+    if (x <= -33) lines.push("On economics, you generally lean toward social protection, redistribution, and a stronger role for government.");
+    else if (x >= 33) lines.push("On economics, you generally lean toward market competition, less state intervention, and individual choice.");
+    else lines.push("On economics, your position appears more mixed/centrist between state and market roles.");
+    if (y <= -33) lines.push("On culture/authority, you tend to prioritize civil liberties, privacy, and individual freedoms.");
+    else if (y >= 33) lines.push("On culture/authority, you tend to prioritize order, legal strictness, and stronger social control.");
+    else lines.push("On culture/authority, your position appears balanced between liberty and order concerns.");
+    if (d >= 70) lines.push("Your support for democratic norms appears high (e.g., competitive elections, judicial independence, oversight).");
+    else if (d <= 40) lines.push("Your support for some core democratic norms appears lower on this run.");
+    else lines.push("Your support for democratic norms appears moderate and may vary by context.");
+    lines.push("This is a simplified map and may not capture all issue-specific views.");
+    return lines;
+  }
   const lines = [];
 
   // Economy tendencies
@@ -518,10 +653,10 @@ function drawPlot(svg, x, y) {
     t.appendChild(document.createTextNode(s));
   };
 
-  txt(left + 6, cy - 12, "چپ اقتصادی", "start");
-  txt(right - 6, cy - 12, "راست اقتصادی", "end");
-  txt(cx + 6, top + 10, "اقتدارگرا", "start");
-  txt(cx + 6, bottom - 10, "آزادی‌خواه", "start");
+  txt(left + 6, cy - 12, t("axisLeft"), "start");
+  txt(right - 6, cy - 12, t("axisRight"), "end");
+  txt(cx + 6, top + 10, t("axisTop"), "start");
+  txt(cx + 6, bottom - 10, t("axisBottom"), "start");
 
   // dot
   add("circle", { cx: dotX, cy: dotY, r: 7, fill: "rgba(122,167,255,.95)" });
@@ -530,52 +665,15 @@ function drawPlot(svg, x, y) {
 
 // ---------- Methodology modal ----------
 function buildMethodologyHTML(data) {
-  return `
-    <h4>این ابزار چه چیزی را می‌سنجد؟</h4>
-    <p>
-      برای ساده‌سازی، دو محور استفاده می‌کنیم:
-      <strong>اقتصاد</strong> (نقش دولت/بازار) و <strong>فرهنگ/اقتدار</strong> (حقوق مدنی در برابر نظم و کنترل).
-      این فقط یک خلاصه‌سازی است؛ باورهای واقعی چندبعدی‌اند.
-    </p>
-
-    <h4>چرا «هنجارهای دموکراتیک» جداست؟</h4>
-    <p>
-      ممکن است افراد در اقتصاد و فرهنگ/اقتدار متفاوت باشند، اما هر دو (یا هیچ‌کدام) از اصولی مثل
-      <strong>انتخابات رقابتی، استقلال دادگاه، حقوق متهم، و امکان نظارت عمومی</strong> حمایت کنند.
-      برای همین یک امتیاز جداگانه داریم: <strong>۰ تا ۱۰۰</strong>.
-    </p>
-
-    <h4>امتیازدهی چطور کار می‌کند؟</h4>
-    <ul>
-      <li>گزینه‌ها به عدد تبدیل می‌شوند: کاملاً مخالفم=-۲ … کاملاً موافقم=+۲</li>
-      <li>هر سؤال وزن دارد (wx, wy, wd) و پاسخ در آن وزن ضرب می‌شود.</li>
-      <li>برای مقایسه‌پذیری، امتیازها نرمال می‌شوند: X و Y از -۱۰۰ تا +۱۰۰، و دموکراسی از ۰ تا ۱۰۰.</li>
-      <li>بعضی سؤال‌ها «معکوس» هستند (reverse_scored) تا جهت‌داری کمتر شود.</li>
-    </ul>
-
-    <h4>کنترل کیفیت و «اطمینان نتیجه»</h4>
-    <p>
-      در نظرسنجی‌ها پاسخ‌های عجولانه یا خیلی یکنواخت می‌تواند نتیجه را کم‌اعتبار کند.
-      یک سؤالِ «توجه»، یک سؤال نامعمول، چند جفت سازگاری، و سرعت پاسخ‌دهی فقط به‌عنوان <strong>نشانه</strong> بررسی می‌شوند.
-      اگر این نشانه‌ها فعال شوند، نتیجه با برچسب «اطمینان پایین/متوسط» نمایش داده می‌شود — بدون قضاوت.
-    </p>
-
-    <h4>محرمانگی</h4>
-    <p>
-      پاسخ‌ها در این نسخه داخل مرورگر نگهداری می‌شود (sessionStorage).
-      اگر صفحه را از یک وب‌سایت باز کرده‌اید، ممکن است مثل همه وب‌سایت‌ها لاگ فنی معمول وجود داشته باشد.
-      برای حساسیت بیشتر می‌توانید از حالت Private/Incognito مرورگر استفاده کنید.
-    </p>
-
-    <p class="muted small">${data.meta?.disclaimer_fa || ""}</p>
-  `;
+  const disclaimer = IS_EN ? (data.meta?.disclaimer_en || "") : (data.meta?.disclaimer_fa || "");
+  return `${t("methodologyHtml")}<p class="muted small">${disclaimer}</p>`;
 }
 
 // ---------- Navigation ----------
 function goNext() {
   if (idx >= ORDERED.length - 1) {
     // End
-    showToast("به پایان رسیدید. می‌توانید «نمایش نتیجه» را بزنید.");
+    showToast(t("endReached"));
     return;
   }
   idx++;
@@ -595,7 +693,7 @@ function skipCurrent() {
   setAnswers(a);
   setLastAction();
   updateProgress();
-  showToast("این سؤال رد شد. هر زمان خواستید می‌توانید برگردید و پاسخ دهید.");
+  showToast(t("skipped"));
   goNext();
 }
 
@@ -612,8 +710,7 @@ function showResults() {
   if (ratio < minRatio) {
     screen("quiz");
     showToast(
-      `برای محاسبه نتیجه، بهتر است حداقل ${Math.round(minRatio * 100)}٪ سؤال‌ها را پاسخ دهید.\n` +
-      `الان حدود ${Math.round(ratio * 100)}٪ پاسخ داده‌اید.`
+      t("needMinAnswers", { min: Math.round(minRatio * 100), now: Math.round(ratio * 100) })
     );
     return;
   }
@@ -629,14 +726,14 @@ function showResults() {
 
   const ps = q.privacy;
   if (ps == null) {
-    el("scorePrivacy").textContent = "—";
+    el("scorePrivacy").textContent = t("scorePrivacyEmpty");
     el("privacyFill").style.width = "0%";
   } else {
     el("scorePrivacy").textContent = String(round0(ps));
     el("privacyFill").style.width = `${round0(ps)}%`;
   }
 
-  el("quadrantText").textContent = `نقطه‌ی شما در این نقشه نزدیک‌تر به ناحیه‌ی «${quadrantLabel(x, y)}» است.`;
+  el("quadrantText").textContent = t("quadrantText", { label: quadrantLabel(x, y) });
   drawPlot(el("plot"), x, y);
 
   // explanation lines
@@ -655,14 +752,14 @@ function showResults() {
     box.classList.remove("show");
     box.textContent = "";
   } else {
-    const label = q.confidence === "low" ? "نتیجه با اطمینان پایین" : "نتیجه با اطمینان متوسط";
+    const label = q.confidence === "low" ? t("lowConfidence") : t("midConfidence");
     const bullets = q.signals.map((s) => `• ${s.msg}`).join("\n");
     box.textContent =
       `${label}\n` +
-      `پاسخ داده‌شده: ${q.completion}٪\n` +
-      `میانگین زمان هر پاسخ: حدود ${q.secPerQ} ثانیه\n` +
+      `${t("answered", { pct: q.completion })}\n` +
+      `${t("secPerQ", { sec: q.secPerQ })}\n` +
       `${bullets}\n` +
-      `پیشنهاد: اگر برایتان مهم است، یک بار دیگر در محیط آرام‌تر/Private انجام دهید.`;
+      `${t("rerunHint")}`;
     box.classList.add("show");
   }
 
@@ -700,7 +797,7 @@ function wireUI() {
     const a = getAnswers();
     const hasAny = Object.keys(a).some((k) => Number.isFinite(a[k]));
     if (!hasAny) {
-      showToast("چیزی برای ادامه وجود ندارد. «شروع آزمون» را بزنید.");
+      showToast(t("nothingToContinue"));
       return;
     }
     ORDERED = buildOrder(DATA);
@@ -716,10 +813,10 @@ function wireUI() {
     const item = ORDERED[idx];
     const a = getAnswers();
     if (!Number.isFinite(a[item.id])) {
-      showToast("اگر مطمئن نیستید «نظری ندارم» را بزنید یا «می‌گذرم» را انتخاب کنید.");
+      showToast(t("unsureHint"));
     }
     if (idx === ORDERED.length - 1) {
-      showToast("پایان سوال‌ها. می‌توانید «نمایش نتیجه» را بزنید.");
+      showToast(t("endQuestions"));
       return;
     }
     goNext();
@@ -751,6 +848,8 @@ function wireUI() {
   const modal = el("methodModal");
   el("btnMethod").addEventListener("click", () => {
     el("methodBody").innerHTML = buildMethodologyHTML(DATA);
+    const titleEl = modal.querySelector(".fw900");
+    if (titleEl) titleEl.textContent = t("methodologyTitle");
     modal.showModal();
   });
   el("btnCloseMethod").addEventListener("click", () => modal.close());
@@ -786,5 +885,5 @@ async function main() {
 
 main().catch((err) => {
   console.error(err);
-  alert("خطا در بارگذاری فایل‌ها. لطفاً وجود questions.fa.json را کنار index.html بررسی کنید.");
+  alert(t("loadErr"));
 });
