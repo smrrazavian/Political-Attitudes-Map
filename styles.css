@@ -26,10 +26,10 @@
       min-height:100dvh;
       background-color:var(--bg);
       background-image:
-        radial-gradient(1200px 600px at 70% -10%, rgba(122,167,255,.18), transparent),
-        radial-gradient(900px 500px at 10% 0%, rgba(130,255,195,.12), transparent);
-      background-repeat:no-repeat, no-repeat;
-      background-size:1200px 600px, 900px 500px;
+        radial-gradient(140% 90% at 72% -12%, rgba(122,167,255,.2) 0%, rgba(122,167,255,0) 62%),
+        radial-gradient(120% 80% at 8% 0%, rgba(130,255,195,.12) 0%, rgba(130,255,195,0) 60%);
+      background-repeat:no-repeat;
+      background-size:100% 100%;
       color:var(--text);
       font-family:var(--font);
       line-height:1.7;
@@ -47,8 +47,9 @@
       display:flex; align-items:center; gap:8px;
     }
     .logoMark{
-      width:28px; height:28px; display:block; color:var(--text); opacity:.95;
+      width:30px; height:30px; display:block; color:var(--text); opacity:1;
       flex:0 0 auto;
+      filter: brightness(0) invert(1) drop-shadow(0 0 6px rgba(122,167,255,.35));
     }
     .brand h1{ margin:0; font-size:20px; font-weight:700; letter-spacing:-.2px; line-height:1.35; }
     .brand p{ margin:0; font-size:13px; color:var(--muted); line-height:1.7; }
@@ -279,7 +280,9 @@
 
     @media (max-width: 700px){
       body{
-        background-size:900px 460px, 680px 420px;
+        background-image:
+          radial-gradient(160% 95% at 70% -15%, rgba(122,167,255,.2) 0%, rgba(122,167,255,0) 62%),
+          radial-gradient(140% 88% at 8% 0%, rgba(130,255,195,.11) 0%, rgba(130,255,195,0) 60%);
       }
       header{
         flex-direction:column;
