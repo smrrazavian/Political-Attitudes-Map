@@ -1,80 +1,559 @@
 {
   "meta": {
-    "version": "1.2-fa",
+    "version": "1.5-fa",
     "title_fa": "پرسشنامه‌ی نگرش‌های سیاسی (اقتصاد + فرهنگ/اقتدار + هنجارهای دموکراتیک)",
     "lang": "fa",
     "direction": "rtl",
-    "likert": ["کاملاً مخالفم", "مخالفم", "نظری ندارم", "موافقم", "کاملاً موافقم"],
-    "values": [-2, -1, 0, 1, 2],
+    "likert": [
+      "کاملاً مخالفم",
+      "مخالفم",
+      "نظری ندارم",
+      "موافقم",
+      "کاملاً موافقم"
+    ],
+    "values": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
     "quality": {
-      "speeding_avg_seconds_threshold": 1.1,
-      "notes_fa": "نشانه‌های کیفیت داده فقط برای «اطمینان نتیجه» هستند، نه قضاوت یا دروغ‌سنجی."
+      "speeding_avg_seconds_threshold": 2,
+      "notes_fa": "شاخص‌های کیفیت داده فقط برای «اعتماد به نتیجه» هستند، نه قضاوت اخلاقی یا دروغ‌سنجی."
     },
     "disclaimer_fa": "این آزمون یک ساده‌سازی از باورهای چندبُعدی است. نتیجه تقریبی است و تشخیص قطعی/علمیِ هویت سیاسی نیست.",
     "consistency_pairs": [
-      { "a": "E02", "b": "E11", "rule": "opposite_extremes", "axis": "economy" },
-      { "a": "E04", "b": "E13", "rule": "opposite_extremes", "axis": "economy" },
-
-      { "a": "A03", "b": "A10", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A04", "b": "A11", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A05", "b": "A12", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A06", "b": "A13", "rule": "opposite_extremes", "axis": "culture_authority" }
+      {
+        "a": "E02",
+        "b": "E11",
+        "rule": "opposite_extremes",
+        "axis": "economy"
+      },
+      {
+        "a": "E04",
+        "b": "E13",
+        "rule": "opposite_extremes",
+        "axis": "economy"
+      },
+      {
+        "a": "A04",
+        "b": "A11",
+        "rule": "opposite_extremes",
+        "axis": "authority"
+      },
+      {
+        "a": "A06",
+        "b": "A13",
+        "rule": "opposite_extremes",
+        "axis": "authority"
+      }
     ]
   },
   "items": [
-    { "id": "E01", "text_fa": "دولت باید با مالیاتِ بیشتر از درآمدهای خیلی بالا، فاصلهٔ طبقاتی را کمتر کند.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E02", "text_fa": "اگر مجبور به انتخاب باشیم، تأمینِ حداقلِ معیشت برای همه مهم‌تر از پایین نگه داشتنِ مالیات‌هاست.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E03", "text_fa": "برای بعضی کالاهای ضروری (مثل دارو)، مقررات روی قیمت می‌تواند لازم باشد.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E04", "text_fa": "حقوق و امنیتِ شغلیِ کارگر باید حتی اگر هزینهٔ تولید را بالا ببرد، حمایت شود.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E05", "text_fa": "بهتر است آموزش و درمانِ پایه تا حد ممکن برای همه قابل‌دسترسی و کم‌هزینه باشد.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E06", "text_fa": "دولت باید با انحصارهای بزرگ و رانت‌های اقتصادی سخت‌گیرانه برخورد کند.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E07", "text_fa": "حفاظت از محیط‌زیست می‌تواند ارزشِ محدود کردنِ بعضی فعالیت‌های اقتصادی را داشته باشد.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-
-    { "id": "E08", "text_fa": "رقابتِ آزاد معمولاً بهتر از دخالت دولت می‌تواند کیفیت و قیمت را بهتر کند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E09", "text_fa": "برای رشد اقتصادی، بهتر است مقرراتِ کسب‌وکار کمتر شود حتی اگر برخی حمایت‌ها کاهش پیدا کند.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E10", "text_fa": "خصوصی‌سازیِ درست و شفاف می‌تواند خدمات را بهتر از مدیریت دولتی ارائه کند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E11", "text_fa": "اگر مجبور به انتخاب باشیم، پایین نگه داشتنِ مالیات‌ها مهم‌تر از گسترشِ خدمات رفاهی است.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E12", "text_fa": "اختلاف درآمد زیاد همیشه بد نیست؛ اگر حاصلِ تلاش و مهارت باشد قابل‌قبول است.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E13", "text_fa": "بازار کار باید انعطاف‌پذیر باشد، حتی اگر امنیت شغلیِ بعضی افراد کمتر شود.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E14", "text_fa": "کمک‌های دولتی بهتر است محدود و هدفمند باشد تا وابستگی ایجاد نکند.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-
-    { "id": "A01", "text_fa": "آزادی بیان باید شامل دیدگاه‌های ناخوشایند هم باشد، تا وقتی تهدید و خشونت نباشد.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A02", "text_fa": "حریم خصوصی مردم باید حفظ شود، حتی اگر نظارتِ بیشتر به امنیت کمک کند.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A03", "text_fa": "قانون باید حقوقِ برابرِ زنان و مردان را در کار و زندگی عمومی تضمین کند.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A04", "text_fa": "افراد باید در انتخاب پوششِ خود آزاد باشند، تا وقتی به دیگران آسیب نمی‌زنند.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A05", "text_fa": "تبعیض در کار و خدمات عمومی علیه افراد با گرایش یا هویتِ جنسی متفاوت نباید قانونی باشد.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A06", "text_fa": "اقلیت‌های قومی/زبانی باید بتوانند زبان مادری‌شان را در آموزش یا رسانه حفظ و استفاده کنند.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A07", "text_fa": "دولت نباید وارد روابط خصوصیِ رضایتمندانه‌ی بزرگسالان شود.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A08", "text_fa": "برای امنیت و نظم، گاهی لازم است آزادی‌های فردی محدود شود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A09", "text_fa": "دولت باید بتواند تجمعات و اعتراضات را سخت‌گیرانه کنترل کند تا بی‌نظمی ایجاد نشود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A10", "text_fa": "سیاست‌گذاری باید نقش‌های سنتیِ خانواده (مثل نان‌آور/خانه‌دار) را تشویق کند.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A11", "text_fa": "قانون باید در فضای عمومی درباره «رفتار و پوشش» سخت‌گیرانه‌تر باشد تا اخلاق عمومی حفظ شود.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A12", "text_fa": "قانون بهتر است ازدواج را فقط بین زن و مرد به رسمیت بشناسد.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A13", "text_fa": "برای حفظ وحدت، بهتر است اقلیت‌ها با فرهنگ غالب سازگار شوند تا تفاوت‌ها پررنگ نشود.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A14", "text_fa": "در بحران‌ها، تصمیم‌گیری متمرکز و سریع از مشارکت گسترده مهم‌تر است.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "D01", "text_fa": "انتخابات باید واقعی، رقابتی و با امکان تغییر قدرت برگزار شود.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D02", "text_fa": "تغییر دولت باید فقط از راه رأی مردم و روند قانونی انجام شود.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D03", "text_fa": "قوه قضاییه باید مستقل باشد و بتواند جلوی سوءاستفاده‌ی قدرت را بگیرد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D04", "text_fa": "رسانه‌ها باید بتوانند آزادانه از حکومت و نهادهای قدرتمند انتقاد کنند.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D05", "text_fa": "همه شهروندان باید در برابر قانون حقوق برابر داشته باشند، حتی اگر متعلق به اقلیت باشند.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D06", "text_fa": "حکومت باید شفاف باشد و امکان نظارت عمومی و گزارش‌گری مستقل وجود داشته باشد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-
-    { "id": "D07", "text_fa": "اگر رهبران کشور تصمیم بگیرند، دیگر نیازی به انتخابات و پارلمان قوی نیست.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
-    { "id": "D08", "text_fa": "در بعضی شرایط، حکومت نظامی می‌تواند راه حلِ مناسبی باشد.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
-
-    { "id": "QC01", "text_fa": "برای اطمینان از دقت پاسخ‌ها، لطفاً در این سؤال گزینه «موافقم» را انتخاب کنید.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "attention_check" },
-
-    { "id": "INF01", "text_fa": "بهتر است برای تصمیم‌های مهم کشور، هر ماه یک بار «شیر یا خط» بیندازیم تا سریع‌تر جلو برویم.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "infrequency" }
+    {
+      "id": "E01",
+      "text_fa": "دولت باید با مالیاتِ بیشتر از درآمدهای خیلی بالا، فاصلهٔ طبقاتی را کمتر کند.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E02",
+      "text_fa": "اگر مجبور به انتخاب باشیم، تأمینِ حداقلِ معیشت برای همه مهم‌تر از پایین نگه داشتنِ مالیات‌هاست.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E04",
+      "text_fa": "حقوق و امنیتِ شغلیِ کارگر باید حتی اگر هزینهٔ تولید را بالا ببرد، حمایت شود.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E05",
+      "text_fa": "دولت باید تضمین کند آموزش و درمانِ پایه برای همه قابل‌دسترسی باشد، حتی اگر هزینه عمومی کمی افزایش یابد.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E06",
+      "text_fa": "برای مقابله با انحصار و رانت، نظارت و مقرراتِ قوی لازم است؛ حتی اگر کار برای کسب‌وکارها سخت‌تر شود.",
+      "wx": -1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E08",
+      "text_fa": "رقابتِ آزاد معمولاً بهتر از کنترل مستقیم دولت، به بهبود کیفیت و کاهش قیمت کمک می‌کند.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E09",
+      "text_fa": "برای رشد اقتصادی، کاهش مقرراتِ کسب‌وکار معمولاً از افزایش حمایت‌های دولتی مهم‌تر است.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E10",
+      "text_fa": "در برخی خدمات، واگذاری به بخش خصوصی (با نظارت و رقابت) می‌تواند بهتر از ادارهٔ دولتی عمل کند.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E11",
+      "text_fa": "اگر مجبور به انتخاب باشیم، پایین نگه داشتنِ مالیات‌ها مهم‌تر از گسترشِ خدمات رفاهی است.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E13",
+      "text_fa": "بازار کار باید انعطاف‌پذیر باشد، حتی اگر امنیت شغلیِ بعضی افراد کمتر شود.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E14",
+      "text_fa": "یارانه‌ها و کمک‌های نقدیِ گسترده معمولاً وابستگی ایجاد می‌کند؛ بهتر است محدود و هدفمند باشد.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "A01",
+      "text_fa": "آزادی بیان باید شامل دیدگاه‌های ناخوشایند هم باشد، تا وقتی تهدید و خشونت نباشد.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A02",
+      "text_fa": "حریم خصوصی مردم باید حفظ شود، حتی اگر نظارتِ بیشتر به امنیت کمک کند.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A03",
+      "text_fa": "قانون باید تبعیض جنسیتی را در استخدام و دستمزد و حضور اجتماعی ممنوع کند.",
+      "wx": 0,
+      "wy": -1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A04",
+      "text_fa": "افراد باید در انتخاب پوششِ خود آزاد باشند، تا وقتی به دیگران آسیب نمی‌زنند.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A05",
+      "text_fa": "تبعیض در کار و خدمات عمومی علیه افراد با گرایش یا هویتِ جنسی متفاوت نباید قانونی باشد.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A06",
+      "text_fa": "اقلیت‌های قومی/زبانی باید بتوانند زبان مادری‌شان را در آموزش یا رسانه حفظ و استفاده کنند.",
+      "wx": 0,
+      "wy": -1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A07",
+      "text_fa": "دولت نباید وارد روابط خصوصیِ رضایتمندانه‌ی بزرگسالان شود.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A08",
+      "text_fa": "برای امنیت عمومی، دولت باید بتواند نظارت دیجیتال و شهری را حتی با کاهش بخشی از حریم خصوصی گسترش دهد.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A11",
+      "text_fa": "قانون باید در فضای عمومی درباره «رفتار و پوشش» سخت‌گیرانه‌تر باشد، حتی اگر آزادی فردی را محدود کند.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A12",
+      "text_fa": "قانون بهتر است ازدواج را فقط بین زن و مرد به رسمیت بشناسد.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A13",
+      "text_fa": "برای حفظ وحدت، بهتر است اقلیت‌ها با فرهنگ غالب سازگار شوند تا تفاوت‌ها پررنگ نشود.",
+      "wx": 0,
+      "wy": 1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "D01",
+      "text_fa": "انتخابات باید واقعی، رقابتی و با امکان تغییر قدرت برگزار شود.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D02",
+      "text_fa": "تغییر قدرت سیاسی باید فقط از راه رأی مردم و روند قانونی انجام شود، نه با زور یا کودتا.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D03",
+      "text_fa": "قوه قضاییه باید مستقل باشد و بتواند جلوی سوءاستفاده‌ی قدرت را بگیرد.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D04",
+      "text_fa": "رسانه‌ها باید بتوانند آزادانه از حکومت و نهادهای قدرتمند انتقاد کنند.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D06",
+      "text_fa": "حکومت باید شفاف باشد و امکان نظارت عمومی و گزارش‌گری مستقل وجود داشته باشد.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D07",
+      "text_fa": "اگر رهبران کشور تصمیم بگیرند، دیگر نیازی به انتخابات و پارلمان قوی نیست.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "D08",
+      "text_fa": "در بعضی شرایط، حکومت نظامی می‌تواند راه حلِ مناسبی باشد.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "D09",
+      "text_fa": "وجود یک رهبر قدرتمند از داشتن نهادهای مستقل و پاسخگو مهم‌تر است.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "SE01",
+      "text_fa": "سناریو: دولت ۱۰۰ واحد بودجه‌ی جدید دارد. کدام گزینه را ترجیح می‌دهید؟",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy",
+      "choices": [
+        {
+          "label_fa": "بیشتر بودجه صرف مسکن/درمان عمومی و یارانه مستقیم خانوارهای کم‌درآمد شود.",
+          "label_en": "Spend most on public housing/healthcare and direct support for low-income households.",
+          "value": -2
+        },
+        {
+          "label_fa": "ترکیبِ متمایل به حمایت اجتماعی با بخشی برای کسب‌وکارها.",
+          "label_en": "A support-leaning mix with some allocation to businesses.",
+          "value": -1
+        },
+        {
+          "label_fa": "تقسیم برابر بین حمایت اجتماعی و مشوق‌های بازار.",
+          "label_en": "Split equally between social support and market incentives.",
+          "value": 0
+        },
+        {
+          "label_fa": "تمرکز بیشتر بر کاهش مالیات و مشوق سرمایه‌گذاری شرکت‌ها.",
+          "label_en": "Focus more on tax cuts and investment incentives for firms.",
+          "value": 1
+        },
+        {
+          "label_fa": "تقریباً همه بودجه صرف آزادسازی بازار، کاهش مالیات و کوچک‌سازی حمایت‌های دولتی شود.",
+          "label_en": "Use almost all of it for market liberalization, tax cuts, and shrinking state support.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SA01",
+      "text_fa": "سناریو: در یک شهر بزرگ اعتراضات گسترده اما عمدتاً مسالمت‌آمیز شکل گرفته است. سیاست مناسب چیست؟",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority",
+      "choices": [
+        {
+          "label_fa": "اولویت با حفظ حق تجمع/بیان باشد و مداخله فقط در موارد خشونت واقعی.",
+          "label_en": "Prioritize assembly/speech rights and intervene only in cases of actual violence.",
+          "value": -2
+        },
+        {
+          "label_fa": "مدیریت نرم با محدودیت‌های حداقلی و مذاکره مستمر.",
+          "label_en": "Soft management with minimal restrictions and ongoing negotiation.",
+          "value": -1
+        },
+        {
+          "label_fa": "ترکیبی از مجوز، محدودیت زمانی/مکانی و گفت‌وگو.",
+          "label_en": "A mixed approach with permits, time/place limits, and dialogue.",
+          "value": 0
+        },
+        {
+          "label_fa": "کنترل سخت‌گیرانه‌تر برای پیشگیری از بی‌نظمی، حتی با محدودیت آزادی تجمع.",
+          "label_en": "Stricter control to prevent disorder, even with tighter protest limits.",
+          "value": 1
+        },
+        {
+          "label_fa": "محدودسازی حداکثری اعتراضات و اختیار گسترده برای برخورد فوری.",
+          "label_en": "Maximum restriction of protests and broad immediate enforcement powers.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SD01",
+      "text_fa": "سناریو: کشور در بحران امنیتی است و دولت می‌خواهد پارلمان را موقتاً کنار بگذارد. کدام گزینه را ترجیح می‌دهید؟",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy",
+      "choices": [
+        {
+          "label_fa": "کنار گذاشتن پارلمان و انتخابات تا زمان نامعلوم برای سرعت تصمیم‌گیری.",
+          "label_en": "Suspend parliament and elections for an open-ended period for fast decisions.",
+          "value": -2
+        },
+        {
+          "label_fa": "اختیارات فوق‌العاده طولانی‌مدت برای دولت با نظارت محدود.",
+          "label_en": "Grant long-term emergency powers to the executive with limited oversight.",
+          "value": -1
+        },
+        {
+          "label_fa": "اختیارات اضطراری کوتاه‌مدت با بازبینی دوره‌ای.",
+          "label_en": "Allow short emergency powers with periodic review.",
+          "value": 0
+        },
+        {
+          "label_fa": "حفظ نقش پارلمان/دادگاه و زمان‌بندی روشن برای پایان وضعیت اضطراری.",
+          "label_en": "Keep parliament/courts active and set a clear end date for emergency powers.",
+          "value": 1
+        },
+        {
+          "label_fa": "حتی در بحران، نظارت پارلمان و استقلال قضایی و امکان رقابت سیاسی باید کامل حفظ شود.",
+          "label_en": "Even in crisis, preserve full parliamentary oversight, judicial independence, and political competition.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SE02",
+      "text_fa": "سناریو: قیمت اجاره در شهر بزرگ به‌شدت بالا رفته است. کدام راهکار را ترجیح می‌دهید؟",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy",
+      "choices": [
+        {
+          "label_fa": "سقف اجاره، مالیات بر خانه‌های خالی و ساخت مسکن اجتماعی گسترده.",
+          "label_en": "Rent caps, vacancy taxes, and large-scale social housing.",
+          "value": -2
+        },
+        {
+          "label_fa": "ترکیبی از حمایت مستأجران با مشوق محدود برای عرضه بیشتر.",
+          "label_en": "A tenant-supporting mix with limited supply incentives.",
+          "value": -1
+        },
+        {
+          "label_fa": "ترکیب برابر از حمایت اجاره و تسهیل ساخت‌وساز.",
+          "label_en": "Balanced mix of rent support and construction easing.",
+          "value": 0
+        },
+        {
+          "label_fa": "تمرکز اصلی بر آزادسازی ساخت‌وساز و کاهش مقررات بازار مسکن.",
+          "label_en": "Mainly deregulate construction and ease housing market rules.",
+          "value": 1
+        },
+        {
+          "label_fa": "عدم مداخله قیمتی؛ تکیه کامل بر مکانیزم بازار و رقابت سازندگان.",
+          "label_en": "No price intervention; rely fully on market mechanisms.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SA02",
+      "text_fa": "سناریو: نرخ جرم شهری بالا رفته است. کدام بسته سیاستی را ترجیح می‌دهید؟",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority",
+      "choices": [
+        {
+          "label_fa": "تمرکز بر پیشگیری اجتماعی، آموزش و توانمندسازی محلات با کمترین سخت‌گیری کیفری.",
+          "label_en": "Focus on social prevention and local empowerment with minimal punitive expansion.",
+          "value": -2
+        },
+        {
+          "label_fa": "افزایش محدود پلیس همراه با برنامه‌های بازپروری و نظارت قضایی قوی.",
+          "label_en": "Limited policing increase with rehabilitation and strong judicial oversight.",
+          "value": -1
+        },
+        {
+          "label_fa": "ترکیب متوازن از پیشگیری اجتماعی و اجرای قانون.",
+          "label_en": "Balanced mix of social prevention and law enforcement.",
+          "value": 0
+        },
+        {
+          "label_fa": "افزایش محسوس اختیارات پلیس و نظارت شهری برای کنترل جرم.",
+          "label_en": "Significantly expand police powers and urban surveillance.",
+          "value": 1
+        },
+        {
+          "label_fa": "سیاست سخت‌گیرانه حداکثری: مجازات شدیدتر و اختیارات گسترده امنیتی.",
+          "label_en": "Maximum hardline policy: harsher penalties and broad security powers.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SD02",
+      "text_fa": "سناریو: دولت می‌خواهد برای ۶ ماه رسانه‌های منتقد را محدود کند. موضع شما چیست؟",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy",
+      "choices": [
+        {
+          "label_fa": "محدودسازی کامل رسانه‌های منتقد برای حفظ ثبات.",
+          "label_en": "Fully restrict critical media to preserve stability.",
+          "value": -2
+        },
+        {
+          "label_fa": "محدودیت گسترده اما موقت با نظارت حداقلی.",
+          "label_en": "Broad but temporary restrictions with minimal oversight.",
+          "value": -1
+        },
+        {
+          "label_fa": "محدودیت بسیار محدود، کوتاه‌مدت و قابل بازبینی قضایی.",
+          "label_en": "Very limited, short-term restrictions with judicial review.",
+          "value": 0
+        },
+        {
+          "label_fa": "حفظ آزادی رسانه با سازوکار پاسخگویی و حق شکایت قانونی.",
+          "label_en": "Protect media freedom with accountability and legal complaint channels.",
+          "value": 1
+        },
+        {
+          "label_fa": "عدم محدودیت سیاسی رسانه؛ حتی در بحران هم نقد حکومت باید ممکن باشد.",
+          "label_en": "No political media restrictions; criticism must remain possible even in crisis.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "QC01",
+      "text_fa": "برای اطمینان از دقت پاسخ‌ها، لطفاً در این سؤال گزینه «موافقم» را انتخاب کنید.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "attention_check"
+    },
+    {
+      "id": "INF01",
+      "text_fa": "بهتر است برای تصمیم‌های مهم کشور، هر ماه یک بار «شیر یا خط» بیندازیم تا سریع‌تر جلو برویم.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "infrequency"
+    }
   ]
 }

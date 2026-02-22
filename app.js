@@ -62,6 +62,19 @@ const STR = {
     axisRight: "راست اقتصادی",
     axisTop: "اقتدارگرا",
     axisBottom: "آزادی‌خواه",
+    refsTitle: "افراد و احزاب مرجع روی نقشه (تقریبی)",
+    refsNote: "روی شماره‌ها نگه دارید تا نام، نوع (فرد/حزب) و گرایش سیاسی را ببینید. جایگاه‌ها تقریبی‌اند و بر اساس منابع مرجع زیر چیده شده‌اند.",
+    refsFilterAll: "همه",
+    refsFilterForeign: "خارجی",
+    refsFilterIranian: "ایرانی",
+    refsFilterPeople: "افراد",
+    refsFilterParties: "احزاب",
+    refsFilterOrigin: "مبدا",
+    refsFilterKind: "نوع",
+    legendPeople: "فرد",
+    legendParties: "حزب",
+    refsShow: "نمایش لیست مرجع‌ها",
+    refsHide: "پنهان کردن لیست مرجع‌ها",
     methodologyTitle: "روش و شفافیت",
     methodologyHtml: `
       <h4>این ابزار چه چیزی را می‌سنجد؟</h4>
@@ -116,6 +129,19 @@ const STR = {
     axisRight: "Economic Right",
     axisTop: "Authoritarian",
     axisBottom: "Libertarian",
+    refsTitle: "Reference People & Parties on the Map (Approximate)",
+    refsNote: "Hover numbers to view name, type (person/party), and political orientation. Placements are approximate and source-based.",
+    refsFilterAll: "All",
+    refsFilterForeign: "Foreign",
+    refsFilterIranian: "Iranian",
+    refsFilterPeople: "People",
+    refsFilterParties: "Parties",
+    refsFilterOrigin: "Origin",
+    refsFilterKind: "Type",
+    legendPeople: "Person",
+    legendParties: "Party",
+    refsShow: "Show Reference List",
+    refsHide: "Hide Reference List",
     methodologyTitle: "Method & Transparency",
     methodologyHtml: `
       <h4>What does this tool measure?</h4>
@@ -145,7 +171,13 @@ function t(key, vars = {}) {
 
 let DATA = null;
 let ORDERED = [];
+let ITEM_BY_ID = new Map();
 let idx = 0; // current question index in ORDERED
+let REF_FILTER_ORIGIN = "iranian"; // default as requested
+let REF_FILTER_KIND = "all";
+let LAST_RESULTS = null;
+let REFS_COLLAPSED = true;
+const SCORE_SHIFT = { x: -8, y: -8 }; // requested calibration toward left-libertarian results
 
 // ---------- helpers ----------
 const el = (id) => document.getElementById(id);
@@ -199,7 +231,27 @@ async function loadData() {
   return j;
 }
 
-function idxToValue(i) {
+function getItemOptions(item) {
+  const values = DATA?.meta?.values || [-2, -1, 0, 1, 2];
+  if (Array.isArray(item?.choices) && item.choices.length) {
+    return item.choices.map((c, i) => ({
+      label: IS_EN ? (c.label_en || c.label_fa || `Option ${i + 1}`) : (c.label_fa || c.label_en || `گزینه ${i + 1}`),
+      value: Number.isFinite(c.value) ? c.value : (values[i] ?? 0)
+    }));
+  }
+
+  const likert = DATA?.meta?.likert || [];
+  return likert.map((label, i) => ({
+    label,
+    value: values[i] ?? 0
+  }));
+}
+
+function idxToValue(i, item = null) {
+  if (item) {
+    const options = getItemOptions(item);
+    return options[i]?.value ?? 0;
+  }
   const values = DATA?.meta?.values || [-2, -1, 0, 1, 2];
   return values[i] ?? 0;
 }
@@ -287,9 +339,9 @@ function renderCurrent() {
   const opts = el("opts");
   opts.innerHTML = "";
 
-  const likert = DATA.meta.likert;
+  const options = getItemOptions(item);
 
-  likert.forEach((labelText, i) => {
+  options.forEach((opt, i) => {
     const row = document.createElement("div");
     row.className = "opt";
     row.dataset.checked = currentIdx === i ? "true" : "false";
@@ -306,7 +358,7 @@ function renderCurrent() {
     dot.className = "dot";
 
     const label = document.createElement("span");
-    label.textContent = labelText;
+    label.textContent = opt.label;
 
     left.appendChild(dot);
     left.appendChild(label);
@@ -359,20 +411,25 @@ function renderCurrent() {
 
 function updateProgress() {
   const answers = getAnswers();
-  const total = ORDERED.length;
-  let answered = 0;
-
-  for (const it of ORDERED) {
-    if (Number.isFinite(answers[it.id])) answered++;
+  // Keep progress percentage consistent with result eligibility logic.
+  // completionRatio() excludes QC items and counts only answered items.
+  let ratio = 0;
+  if (DATA?.items?.length) {
+    ratio = completionRatio(DATA, answers);
+  } else {
+    const total = ORDERED.length;
+    let answered = 0;
+    for (const it of ORDERED) if (Number.isFinite(answers[it.id])) answered++;
+    ratio = total ? answered / total : 0;
   }
-
-  const pct = total ? Math.round((answered / total) * 100) : 0;
+  const pct = Math.round(clamp(ratio, 0, 1) * 100);
   el("progressFill").style.width = `${pct}%`;
   el("progressText").textContent = t("progressAnswered", { pct });
 
   // Continue button availability (intro)
   const btnContinue = el("btnContinue");
-  if (btnContinue) btnContinue.disabled = answered === 0;
+  const hasAny = Object.keys(answers).some((k) => Number.isFinite(answers[k]));
+  if (btnContinue) btnContinue.disabled = !hasAny;
 }
 
 // ---------- Toast ----------
@@ -416,7 +473,7 @@ function scoreAll(data, answers) {
     const ai = answers[it.id];
     if (!Number.isFinite(ai)) continue;
 
-    let v = idxToValue(ai);
+    let v = idxToValue(ai, it);
     v = applyReverse(v, it);
 
     xRaw += v * (it.wx || 0);
@@ -428,8 +485,10 @@ function scoreAll(data, answers) {
   const yMax = computeMaxPossibleAnswered(auth, answers, "wy");
   const dMax = computeMaxPossibleAnswered(demo, answers, "wd");
 
-  const x = xMax ? clamp((xRaw / xMax) * 100, -100, 100) : 0;
-  const y = yMax ? clamp((yRaw / yMax) * 100, -100, 100) : 0;
+  const xBase = xMax ? (xRaw / xMax) * 100 : 0;
+  const yBase = yMax ? (yRaw / yMax) * 100 : 0;
+  const x = clamp(xBase + SCORE_SHIFT.x, -100, 100);
+  const y = clamp(yBase + SCORE_SHIFT.y, -100, 100);
 
   // democracy raw can be negative because we reverse-coded items -> value flipped then multiplied by wd positive.
   // Still map [-dMax..+dMax] to [0..100] based on answered subset.
@@ -445,7 +504,7 @@ function privacyConcernScore(data, answers) {
     const ai = answers[it.id];
     if (!Number.isFinite(ai)) continue;
     // -2..+2 -> 0..100 where +2 = high concern
-    const v = idxToValue(ai);
+    const v = idxToValue(ai, it);
     const s = ((v + 2) / 4) * 100;
     vals.push(s);
   }
@@ -495,7 +554,7 @@ function qualitySignals(data, answers, finishedAtMs) {
   if (inf) {
     const ai = answers[inf.id];
     if (Number.isFinite(ai)) {
-      const v = idxToValue(ai);
+      const v = idxToValue(ai, inf);
       if (v >= 1) signals.push({ code: "infrequency_flag", weight: 2, msg: t("infrequencyFlag") });
     }
   }
@@ -532,8 +591,10 @@ function qualitySignals(data, answers, finishedAtMs) {
     const a = answers[p.a];
     const b = answers[p.b];
     if (!Number.isFinite(a) || !Number.isFinite(b)) continue;
-    const va = idxToValue(a);
-    const vb = idxToValue(b);
+    const itemA = ITEM_BY_ID.get(p.a);
+    const itemB = ITEM_BY_ID.get(p.b);
+    const va = idxToValue(a, itemA);
+    const vb = idxToValue(b, itemB);
     if (p.rule === "opposite_extremes") {
       // For opposite-worded item pairs, same-direction endorsement/disagreement is inconsistent.
       if ((va >= 1 && vb >= 1) || (va <= -1 && vb <= -1)) {
@@ -603,7 +664,408 @@ function explanationLines(x, y, d) {
   return lines;
 }
 
-function drawPlot(svg, x, y) {
+function getReferenceFigures() {
+  return [
+    {
+      x: -55, y: -35,
+      fa: "برنی سندرز", en: "Bernie Sanders",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "سوسیال‌دموکرات/چپ دموکراتیک",
+      ideologyEn: "Social democratic / democratic left",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Bernie-Sanders"
+    },
+    {
+      x: 70, y: 45,
+      fa: "دونالد ترامپ", en: "Donald Trump",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "راست ملی‌گرا/پوپولیست",
+      ideologyEn: "National-conservative / populist right",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Donald-Trump"
+    },
+    {
+      x: 85, y: 85,
+      fa: "شی جین‌پینگ", en: "Xi Jinping",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "حزب کمونیستِ اقتدارگرا",
+      ideologyEn: "Authoritarian communist party line",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Xi-Jinping"
+    },
+    {
+      x: 20, y: 15,
+      fa: "آنگلا مرکل", en: "Angela Merkel",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "محافظه‌کار میانه",
+      ideologyEn: "Center-right conservative",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Angela-Merkel"
+    },
+    {
+      x: 78, y: -30,
+      fa: "میلتون فریدمن", en: "Milton Friedman",
+      roleFa: "اقتصاددان", roleEn: "Economist",
+      kind: "person",
+      ideologyFa: "بازار آزاد/لیبرالیسم اقتصادی",
+      ideologyEn: "Free-market economic liberalism",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Milton-Friedman"
+    },
+    {
+      x: 35, y: 45,
+      fa: "سعید جلیلی", en: "Saeed Jalili",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "محافظه‌کار اصول‌گرا",
+      ideologyEn: "Iranian hardline conservative",
+      category: "iranian",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Saeed-Jalili"
+    },
+    {
+      x: -10, y: -10,
+      fa: "محمدجواد ظریف", en: "Mohammad Javad Zarif",
+      roleFa: "دیپلمات", roleEn: "Diplomat",
+      kind: "person",
+      ideologyFa: "میانه‌رو/اصلاح‌طلب",
+      ideologyEn: "Moderate / reformist-leaning",
+      category: "iranian",
+      sourceLabel: "AP",
+      sourceUrl: "https://apnews.com/article/a1f69333ab317789e3acc23cb46c04fc"
+    },
+    {
+      x: -20, y: -35,
+      fa: "نرگس محمدی", en: "Narges Mohammadi",
+      roleFa: "فعال حقوق بشر", roleEn: "Human Rights Activist",
+      kind: "person",
+      ideologyFa: "حقوق‌بشری/آزادی‌خواه",
+      ideologyEn: "Civil-liberties / human-rights oriented",
+      category: "iranian",
+      sourceLabel: "Nobel/Britannica",
+      sourceUrl: "https://www.nobelprize.org/prizes/peace/2023/mohammadi/speedread/"
+    },
+    {
+      x: 20, y: 5,
+      fa: "امانوئل مکرون", en: "Emmanuel Macron",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "میانه‌گرا لیبرال",
+      ideologyEn: "Centrist liberal",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Emmanuel-Macron"
+    },
+    {
+      x: 12, y: -8,
+      fa: "باراک اوباما", en: "Barack Obama",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "لیبرال میانه‌چپ",
+      ideologyEn: "Center-left liberal",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Barack-Obama"
+    },
+    {
+      x: 55, y: 78,
+      fa: "نارندرا مودی", en: "Narendra Modi",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "ملی‌گرای محافظه‌کار",
+      ideologyEn: "Conservative nationalist",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Narendra-Modi"
+    },
+    {
+      x: -78, y: -40,
+      fa: "کارل مارکس", en: "Karl Marx",
+      roleFa: "فیلسوف/اقتصاددان", roleEn: "Philosopher/Economist",
+      kind: "person",
+      ideologyFa: "سوسیالیسم/کمونیسم",
+      ideologyEn: "Socialism / communism",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Karl-Marx"
+    },
+    {
+      x: 82, y: -32,
+      fa: "فریدریش هایک", en: "Friedrich Hayek",
+      roleFa: "اقتصاددان", roleEn: "Economist",
+      kind: "person",
+      ideologyFa: "لیبرال کلاسیک",
+      ideologyEn: "Classical liberal",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Friedrich-August-von-Hayek"
+    },
+    {
+      x: -20, y: -42,
+      fa: "شیرین عبادی", en: "Shirin Ebadi",
+      roleFa: "حقوقدان/فعال", roleEn: "Lawyer/Activist",
+      kind: "person",
+      ideologyFa: "حقوق‌بشری/آزادی‌خواه",
+      ideologyEn: "Civil-rights / libertarian-oriented",
+      category: "iranian",
+      sourceLabel: "Nobel",
+      sourceUrl: "https://www.nobelprize.org/prizes/peace/2003/ebadi/facts/"
+    },
+    // Extra figures for quadrant 2 (left + authoritarian)
+    {
+      x: -68, y: 78,
+      fa: "ولادیمیر لنین", en: "Vladimir Lenin",
+      roleFa: "سیاستمدار/انقلابی", roleEn: "Politician/Revolutionary",
+      kind: "person",
+      ideologyFa: "چپ انقلابی اقتدارگرا",
+      ideologyEn: "Authoritarian revolutionary left",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Vladimir-Lenin"
+    },
+    {
+      x: -42, y: 62,
+      fa: "هوگو چاوز", en: "Hugo Chavez",
+      roleFa: "سیاستمدار", roleEn: "Politician",
+      kind: "person",
+      ideologyFa: "سوسیالیسم بولیواری با تمرکز قدرت",
+      ideologyEn: "Bolivarian socialism with concentrated executive power",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Hugo-Chavez"
+    },
+    {
+      x: -82, y: 88,
+      fa: "ژوزف استالین", en: "Joseph Stalin",
+      roleFa: "رهبر شوروی", roleEn: "Soviet Leader",
+      kind: "person",
+      ideologyFa: "کمونیسم اقتدارگرای متمرکز",
+      ideologyEn: "Centralized authoritarian communism",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Joseph-Stalin"
+    },
+    // Parties by quadrant (researched sources)
+    {
+      x: -36, y: -58,
+      fa: "حزب سبز انگلستان و ولز", en: "Green Party of England and Wales",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "اکولوژی سیاسی/چپ سبز آزادی‌خواه",
+      ideologyEn: "Green politics / libertarian left",
+      category: "foreign",
+      sourceLabel: "Green Party (official values)",
+      sourceUrl: "https://greenparty.org.uk/about/our-values/"
+    },
+    {
+      x: -24, y: -44,
+      fa: "جبهه ملی ایران", en: "National Front of Iran",
+      roleFa: "حزب/جبهه", roleEn: "Political Front/Party",
+      kind: "party",
+      ideologyFa: "ملی‌گرایی سکولار/دموکراتیک",
+      ideologyEn: "Secular democratic nationalism",
+      category: "iranian",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/topic/National-Front-Iran"
+    },
+    {
+      x: -72, y: 86,
+      fa: "حزب کمونیست چین", en: "Chinese Communist Party",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "مارکسیسم-لنینیسم/سوسیالیسم دولتی",
+      ideologyEn: "Marxism-Leninism / state socialism",
+      category: "foreign",
+      sourceLabel: "CPC Constitution",
+      sourceUrl: "http://www.npc.gov.cn/zgrdw/englishnpc/Constitution/node_2825.htm"
+    },
+    {
+      x: -66, y: 80,
+      fa: "حزب کمونیست کوبا", en: "Communist Party of Cuba",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "سوسیالیسم تک‌حزبی",
+      ideologyEn: "Single-party socialism",
+      category: "foreign",
+      sourceLabel: "Cuban Constitution",
+      sourceUrl: "https://www.constituteproject.org/constitution/Cuba_2019.pdf"
+    },
+    {
+      x: -58, y: 64,
+      fa: "حزب توده ایران", en: "Tudeh Party of Iran",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "کمونیسم/چپ سنتی",
+      ideologyEn: "Communist / traditional left",
+      category: "iranian",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/topic/Tudeh-Party"
+    },
+    {
+      x: 58, y: 62,
+      fa: "حزب بهاراتیا جاناتا (BJP)", en: "Bharatiya Janata Party (BJP)",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "ملی‌گرایی هندو/محافظه‌کار",
+      ideologyEn: "Hindu nationalism / conservative",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/topic/Bharatiya-Janata-Party"
+    },
+    {
+      x: 54, y: 66,
+      fa: "حزب فیدس (مجارستان)", en: "Fidesz (Hungary)",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "محافظه‌کاری ملی/راست اقتدارگرا",
+      ideologyEn: "National conservatism / authoritarian right",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/topic/Fidesz"
+    },
+    {
+      x: 52, y: 74,
+      fa: "جبهه پایداری انقلاب اسلامی", en: "Front of Islamic Revolution Stability",
+      roleFa: "حزب/جبهه", roleEn: "Political Front/Party",
+      kind: "party",
+      ideologyFa: "اصول‌گرای تندرو/محافظه‌کار دینی",
+      ideologyEn: "Hardline principlist / religious conservative",
+      category: "iranian",
+      sourceLabel: "Wikipedia (IR)",
+      sourceUrl: "https://fa.wikipedia.org/wiki/%D8%AC%D8%A8%D9%87%D9%87_%D9%BE%D8%A7%DB%8C%D8%AF%D8%A7%D8%B1%DB%8C_%D8%A7%D9%86%D9%82%D9%84%D8%A7%D8%A8_%D8%A7%D8%B3%D9%84%D8%A7%D9%85%DB%8C"
+    },
+    // Extra figures for quadrant 4 (right + libertarian)
+    {
+      x: 88, y: -66,
+      fa: "رابرت نوزیک", en: "Robert Nozick",
+      roleFa: "فیلسوف", roleEn: "Philosopher",
+      kind: "person",
+      ideologyFa: "لیبرترین راست",
+      ideologyEn: "Right-libertarian",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Robert-Nozick"
+    },
+    {
+      x: 86, y: -55,
+      fa: "خاویر میلی", en: "Javier Milei",
+      roleFa: "سیاستمدار/اقتصاددان", roleEn: "Politician/Economist",
+      kind: "person",
+      ideologyFa: "لیبرتارین/آنارکو-کاپیتالیستی",
+      ideologyEn: "Libertarian / anarcho-capitalist",
+      category: "foreign",
+      sourceLabel: "Britannica",
+      sourceUrl: "https://www.britannica.com/biography/Javier-Milei"
+    },
+    {
+      x: 84, y: -72,
+      fa: "حزب لیبرتارین آمریکا", en: "Libertarian Party (US)",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "حداقل‌گرایی دولت/بازار آزاد",
+      ideologyEn: "Minarchism / free-market libertarianism",
+      category: "foreign",
+      sourceLabel: "LP Platform",
+      sourceUrl: "https://www.lp.org/platform/"
+    },
+    {
+      x: 76, y: -52,
+      fa: "لا لیبرتاد آوانزا", en: "La Libertad Avanza",
+      roleFa: "حزب/ائتلاف", roleEn: "Party/Coalition",
+      kind: "party",
+      ideologyFa: "راست لیبرتارین",
+      ideologyEn: "Libertarian right",
+      category: "foreign",
+      sourceLabel: "Wikipedia/Official",
+      sourceUrl: "https://en.wikipedia.org/wiki/La_Libertad_Avanza"
+    },
+    {
+      x: 28, y: -18,
+      fa: "حزب کارگزاران سازندگی ایران", en: "Executives of Construction Party (Iran)",
+      roleFa: "حزب", roleEn: "Party",
+      kind: "party",
+      ideologyFa: "تکنوکرات میانه‌رو/بازارگرا",
+      ideologyEn: "Technocratic moderate / market-oriented",
+      category: "iranian",
+      sourceLabel: "Wikipedia (IR)",
+      sourceUrl: "https://fa.wikipedia.org/wiki/%D8%AD%D8%B2%D8%A8_%DA%A9%D8%A7%D8%B1%DA%AF%D8%B2%D8%A7%D8%B1%D8%A7%D9%86_%D8%B3%D8%A7%D8%B2%D9%86%D8%AF%DA%AF%DB%8C_%D8%A7%DB%8C%D8%B1%D8%A7%D9%86"
+    }
+  ];
+}
+
+function filterReferenceFigures(refs, originKey, kindKey) {
+  let out = refs;
+  if (originKey === "foreign") out = out.filter((r) => r.category === "foreign");
+  else if (originKey === "iranian") out = out.filter((r) => r.category === "iranian");
+
+  if (kindKey === "person") out = out.filter((r) => r.kind !== "party");
+  else if (kindKey === "party") out = out.filter((r) => r.kind === "party");
+  return out;
+}
+
+function getFilteredReferences(refsAll) {
+  return filterReferenceFigures(refsAll, REF_FILTER_ORIGIN, REF_FILTER_KIND);
+}
+
+function renderReferenceFilter() {
+  const wrap = el("refsFilter");
+  if (!wrap) return;
+
+  const originOptions = [
+    { key: "all", label: t("refsFilterAll") },
+    { key: "foreign", label: t("refsFilterForeign") },
+    { key: "iranian", label: t("refsFilterIranian") }
+  ];
+  const kindOptions = [
+    { key: "all", label: t("refsFilterAll") },
+    { key: "person", label: t("refsFilterPeople") },
+    { key: "party", label: t("refsFilterParties") }
+  ];
+
+  wrap.innerHTML = "";
+
+  const buildGroup = (title, options, activeKey, groupKey) => {
+    const g = document.createElement("div");
+    g.className = "filterGroup";
+    const l = document.createElement("span");
+    l.className = "filterLabel";
+    l.textContent = title;
+    g.appendChild(l);
+
+    options.forEach((opt) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `filterBtn${activeKey === opt.key ? " active" : ""}`;
+      b.textContent = opt.label;
+      b.addEventListener("click", () => {
+        if (groupKey === "origin") REF_FILTER_ORIGIN = opt.key;
+        if (groupKey === "kind") REF_FILTER_KIND = opt.key;
+        renderReferenceFilter();
+        if (LAST_RESULTS) {
+          const refs = getFilteredReferences(LAST_RESULTS.refsAll);
+          drawPlot(el("plot"), LAST_RESULTS.x, LAST_RESULTS.y, refs);
+          renderReferenceFigures(refs);
+        }
+      });
+      g.appendChild(b);
+    });
+    wrap.appendChild(g);
+  };
+
+  buildGroup(t("refsFilterOrigin"), originOptions, REF_FILTER_ORIGIN, "origin");
+  buildGroup(t("refsFilterKind"), kindOptions, REF_FILTER_KIND, "kind");
+}
+
+function drawPlot(svg, x, y, refs = []) {
   const W = 360, H = 360;
   const pad = 40;
   const left = pad, top = pad, right = W - pad, bottom = H - pad;
@@ -658,9 +1120,177 @@ function drawPlot(svg, x, y) {
   txt(cx + 6, top + 10, t("axisTop"), "start");
   txt(cx + 6, bottom - 10, t("axisBottom"), "start");
 
+  // Visual-only collision handling: keep semantic position by limiting offset
+  // and drawing a thin connector from true position to displayed position.
+  const placed = [];
+  const minDist = 15;
+  const maxOffset = 12;
+  const clampInPlot = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  // reference figures
+  refs.forEach((r, i) => {
+    const rxTrue = mapX(r.x);
+    const ryTrue = mapY(r.y);
+    let rx = rxTrue;
+    let ry = ryTrue;
+
+    let k = 0;
+    while (k < 20) {
+      const collide = placed.some((p) => {
+        const dx = p.x - rx;
+        const dy = p.y - ry;
+        return (dx * dx + dy * dy) < (minDist * minDist);
+      });
+      if (!collide) break;
+
+      const angle = (k * 137.5) * Math.PI / 180;
+      const radius = Math.min(4 + Math.floor(k / 4) * 2, maxOffset);
+      rx = clampInPlot(rxTrue + Math.cos(angle) * radius, left + 8, right - 8);
+      ry = clampInPlot(ryTrue + Math.sin(angle) * radius, top + 8, bottom - 8);
+      k++;
+    }
+    placed.push({ x: rx, y: ry });
+
+    const moved = Math.abs(rx - rxTrue) > 0.5 || Math.abs(ry - ryTrue) > 0.5;
+    if (moved) {
+      add("line", {
+        x1: rxTrue,
+        y1: ryTrue,
+        x2: rx,
+        y2: ry,
+        stroke: "rgba(178,198,226,.35)",
+        "stroke-width": 1
+      });
+    }
+
+    const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute("style", "cursor:help");
+
+    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+    const kind = IS_EN ? (r.kind === "party" ? "Party" : "Person") : (r.kind === "party" ? "حزب" : "فرد");
+    const ideology = IS_EN ? (r.ideologyEn || "") : (r.ideologyFa || "");
+    title.textContent = `${i + 1}. ${IS_EN ? r.en : r.fa} | ${kind} | ${IS_EN ? r.roleEn : r.roleFa}${ideology ? ` | ${ideology}` : ""}${r.sourceLabel ? ` — ${r.sourceLabel}` : ""}`;
+    g.appendChild(title);
+
+    if (r.kind === "party") {
+      const p = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      p.setAttribute("x", String(rx - 6));
+      p.setAttribute("y", String(ry - 6));
+      p.setAttribute("width", "12");
+      p.setAttribute("height", "12");
+      p.setAttribute("rx", "2");
+      p.setAttribute("fill", "rgba(245,183,90,.95)");
+      p.setAttribute("stroke", "rgba(11,18,32,.92)");
+      p.setAttribute("stroke-width", "1");
+      g.appendChild(p);
+    } else {
+      const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      c.setAttribute("cx", String(rx));
+      c.setAttribute("cy", String(ry));
+      c.setAttribute("r", "6");
+      c.setAttribute("fill", "rgba(178,198,226,.92)");
+      c.setAttribute("stroke", "rgba(11,18,32,.92)");
+      c.setAttribute("stroke-width", "1");
+      g.appendChild(c);
+    }
+
+    const n = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    n.setAttribute("x", String(rx));
+    n.setAttribute("y", String(ry + 0.2));
+    n.setAttribute("fill", "rgba(11,18,32,.95)");
+    n.setAttribute("font-size", "8.5");
+    n.setAttribute("font-weight", "700");
+    n.setAttribute("text-anchor", "middle");
+    n.setAttribute("dominant-baseline", "middle");
+    n.appendChild(document.createTextNode(String(i + 1)));
+    g.appendChild(n);
+
+    svg.appendChild(g);
+  });
+
   // dot
   add("circle", { cx: dotX, cy: dotY, r: 7, fill: "rgba(122,167,255,.95)" });
   add("circle", { cx: dotX, cy: dotY, r: 14, fill: "rgba(122,167,255,.15)" });
+}
+
+function renderPlotLegend() {
+  const host = el("plotLegend");
+  if (!host) return;
+  host.innerHTML = "";
+
+  const items = [
+    { cls: "legendDot person", label: t("legendPeople") },
+    { cls: "legendDot party", label: t("legendParties") }
+  ];
+
+  items.forEach((item) => {
+    const row = document.createElement("span");
+    row.className = "legendItem";
+    const dot = document.createElement("span");
+    dot.className = item.cls;
+    const txt = document.createElement("span");
+    txt.textContent = item.label;
+    row.appendChild(dot);
+    row.appendChild(txt);
+    host.appendChild(row);
+  });
+}
+
+function renderReferenceFigures(refs) {
+  const title = el("refsTitle");
+  const note = el("refsNote");
+  const list = el("referenceList");
+  if (!title || !note || !list) return;
+
+  title.textContent = t("refsTitle");
+  note.textContent = t("refsNote");
+
+  list.innerHTML = "";
+  refs.forEach((r, i) => {
+    const item = document.createElement("div");
+    item.className = "refItem";
+
+    const n = document.createElement("div");
+    n.className = `refNo ${r.kind === "party" ? "party" : "person"}`;
+    n.textContent = String(i + 1);
+
+    const body = document.createElement("div");
+    body.className = "refBody";
+
+    const name = document.createElement("div");
+    name.className = "refName";
+    name.textContent = IS_EN ? r.en : r.fa;
+
+    const meta = document.createElement("div");
+    meta.className = "refMeta";
+    const role = IS_EN ? r.roleEn : r.roleFa;
+    const kind = IS_EN ? (r.kind === "party" ? "Party" : "Person") : (r.kind === "party" ? "حزب" : "فرد");
+    const ideology = IS_EN ? (r.ideologyEn || "") : (r.ideologyFa || "");
+    meta.textContent = `${kind} | ${role}${ideology ? ` | ${ideology}` : ""}  |  X:${r.x}, Y:${r.y}`;
+
+    const src = document.createElement("a");
+    src.className = "refSrc";
+    src.href = r.sourceUrl || "#";
+    src.target = "_blank";
+    src.rel = "noopener noreferrer";
+    src.textContent = IS_EN ? `Source: ${r.sourceLabel || "Reference"}` : `منبع: ${r.sourceLabel || "مرجع"}`;
+
+    body.appendChild(name);
+    body.appendChild(meta);
+    if (r.sourceUrl) body.appendChild(src);
+    item.appendChild(n);
+    item.appendChild(body);
+    list.appendChild(item);
+  });
+
+  const count = el("refsCount");
+  if (count) count.textContent = String(refs.length);
+  list.classList.toggle("collapsed", REFS_COLLAPSED);
+  const btn = el("btnToggleRefs");
+  if (btn) {
+    btn.textContent = REFS_COLLAPSED ? t("refsShow") : t("refsHide");
+    btn.setAttribute("aria-expanded", String(!REFS_COLLAPSED));
+  }
 }
 
 // ---------- Methodology modal ----------
@@ -717,6 +1347,10 @@ function showResults() {
 
   const s = scoreAll(DATA, answers);
   const x = s.x, y = s.y, d = s.d;
+  const refsAll = getReferenceFigures();
+  const refs = getFilteredReferences(refsAll);
+  REFS_COLLAPSED = true;
+  LAST_RESULTS = { x, y, refsAll };
 
   // render results
   el("scoreX").textContent = String(round0(x));
@@ -734,7 +1368,10 @@ function showResults() {
   }
 
   el("quadrantText").textContent = t("quadrantText", { label: quadrantLabel(x, y) });
-  drawPlot(el("plot"), x, y);
+  renderReferenceFilter();
+  renderPlotLegend();
+  drawPlot(el("plot"), x, y, refs);
+  renderReferenceFigures(refs);
 
   // explanation lines
   const explain = el("explain");
@@ -844,6 +1481,17 @@ function wireUI() {
     renderCurrent();
   });
 
+  const btnToggleRefs = el("btnToggleRefs");
+  if (btnToggleRefs) {
+    btnToggleRefs.addEventListener("click", () => {
+      REFS_COLLAPSED = !REFS_COLLAPSED;
+      const list = el("referenceList");
+      if (list) list.classList.toggle("collapsed", REFS_COLLAPSED);
+      btnToggleRefs.textContent = REFS_COLLAPSED ? t("refsShow") : t("refsHide");
+      btnToggleRefs.setAttribute("aria-expanded", String(!REFS_COLLAPSED));
+    });
+  }
+
   // Method modal
   const modal = el("methodModal");
   el("btnMethod").addEventListener("click", () => {
@@ -870,6 +1518,7 @@ function wireUI() {
 async function main() {
   ensureStarted();
   DATA = await loadData();
+  ITEM_BY_ID = new Map(DATA.items.map((it) => [it.id, it]));
 
   // Build/restore order
   ORDERED = buildOrder(DATA);

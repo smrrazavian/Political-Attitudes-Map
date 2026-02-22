@@ -190,6 +190,71 @@
       .resultsGrid{ grid-template-columns: 1fr; }
     }
     .plotWrap{ display:flex; flex-direction:column; gap:10px; }
+    .refsFilter{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:2px;
+    }
+    .filterGroup{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      width:100%;
+    }
+    .filterLabel{
+      color:var(--muted);
+      font-size:11.5px;
+      min-width:40px;
+    }
+    .filterBtn{
+      appearance:none;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--muted);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      min-height:34px;
+    }
+    .filterBtn.active{
+      color:var(--text);
+      border-color:rgba(188,200,220,.55);
+      background:rgba(188,200,220,.12);
+    }
+    .plotLegend{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top:2px;
+    }
+    .legendItem{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:var(--muted);
+      font-size:11.5px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:4px 8px;
+      background:rgba(255,255,255,.015);
+    }
+    .legendDot{
+      width:10px;
+      height:10px;
+      display:inline-block;
+      border:1px solid rgba(11,18,32,.85);
+      background:rgba(178,198,226,.92);
+      border-radius:999px;
+    }
+    .legendDot.party{
+      border-radius:2px;
+      background:rgba(245,183,90,.95);
+    }
     .plot{ width:100%; max-width:420px; height:auto; border-radius:18px; border:1px solid var(--line); background:rgba(255,255,255,.01); }
     .scoreBox{
       display:grid;
@@ -216,6 +281,74 @@
     .meter > div{ height:100%; width:0%; background:rgba(130,255,195,.55); }
     .meter.blue > div{ background:rgba(122,167,255,.55); }
     .meter.yellow > div{ background:rgba(255,200,120,.55); }
+    .refsList{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:8px;
+      max-height:320px;
+      overflow:auto;
+      padding-inline-end:2px;
+      transition:max-height .2s ease, opacity .2s ease;
+      opacity:1;
+    }
+    .refsList.collapsed{
+      max-height:0;
+      opacity:0;
+      overflow:hidden;
+    }
+    .refItem{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      background:rgba(255,255,255,.015);
+      padding:8px 10px;
+      min-height:56px;
+    }
+    .refNo{
+      width:22px;
+      height:22px;
+      border-radius:999px;
+      border:1px solid rgba(150,170,200,.48);
+      color:rgba(210,220,240,.95);
+      font-size:12px;
+      font-weight:700;
+      line-height:20px;
+      text-align:center;
+      flex:0 0 auto;
+      background:rgba(178,198,226,.92);
+    }
+    .refNo.party{
+      border-radius:6px;
+      background:rgba(245,183,90,.95);
+      color:rgba(23,24,28,.95);
+    }
+    .refBody{ min-width:0; }
+    .refName{
+      font-size:13px;
+      font-weight:700;
+      line-height:1.45;
+      color:var(--text);
+    }
+    .refMeta{
+      font-size:11.5px;
+      line-height:1.45;
+      color:var(--muted);
+      margin-top:2px;
+    }
+    .refSrc{
+      display:inline-block;
+      margin-top:3px;
+      font-size:11.5px;
+      color:rgba(155,211,255,.95);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(155,211,255,.55);
+    }
+    .refSrc:hover{
+      color:var(--text);
+      border-bottom-color:var(--text);
+    }
 
     .explain .line{
       border-inline-start:3px solid rgba(122,167,255,.5);
@@ -305,6 +438,17 @@
       }
       .scoreBox{
         grid-template-columns: 1fr;
+      }
+      .refsList{
+        grid-template-columns: 1fr;
+        max-height:260px;
+      }
+      .filterBtn{
+        flex:1 1 auto;
+        text-align:center;
+      }
+      .filterLabel{
+        width:100%;
       }
       .rowEnd{
         justify-content:stretch;

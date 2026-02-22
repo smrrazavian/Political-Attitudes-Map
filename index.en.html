@@ -158,6 +158,8 @@
         <div class="card">
           <div class="plotWrap">
             <div class="muted small">2D map (X Economy, Y Liberty/Authority)</div>
+            <div class="refsFilter" id="refsFilter" aria-label="Reference people filter"></div>
+            <div class="plotLegend" id="plotLegend" aria-label="Map symbol legend"></div>
             <svg id="plot" class="plot" viewBox="0 0 360 360" aria-label="Position map chart"></svg>
             <div class="muted" id="quadrantText">...</div>
           </div>
@@ -195,6 +197,20 @@
             <div class="muted small mt8">
               This is not a truth detector. It only indicates possible response caution.
             </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="refsHead">
+              <div class="k" id="refsTitle">Reference Figures on the Map (Approximate)</div>
+              <div class="rowWrap">
+                <span class="muted small" id="refsCount">0</span>
+                <button class="btn small" id="btnToggleRefs" type="button" aria-expanded="false">Show Reference List</button>
+              </div>
+            </div>
+            <div class="muted small mt8" id="refsNote">
+              These placements are approximate and educational, not definitive historical truth or full consensus.
+            </div>
+            <div class="refsList mt10" id="referenceList"></div>
           </div>
         </div>
 

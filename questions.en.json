@@ -1,68 +1,559 @@
 {
   "meta": {
-    "version": "1.2-en",
+    "version": "1.5-en",
     "title_en": "Political Attitudes Questionnaire (Economy + Culture/Authority + Democratic Norms)",
     "lang": "en",
     "direction": "ltr",
-    "likert": ["Strongly disagree", "Disagree", "Neutral", "Agree", "Strongly agree"],
-    "values": [-2, -1, 0, 1, 2],
+    "likert": [
+      "Strongly disagree",
+      "Disagree",
+      "Neutral",
+      "Agree",
+      "Strongly agree"
+    ],
+    "values": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
     "quality": {
-      "speeding_avg_seconds_threshold": 1.1,
+      "speeding_avg_seconds_threshold": 2,
       "notes_en": "Data-quality signals are only for result confidence, not judgment or lie detection."
     },
     "disclaimer_en": "This test is a simplification of multidimensional beliefs. Results are approximate and not a definitive/scientific political identity diagnosis.",
     "consistency_pairs": [
-      { "a": "E02", "b": "E11", "rule": "opposite_extremes", "axis": "economy" },
-      { "a": "E04", "b": "E13", "rule": "opposite_extremes", "axis": "economy" },
-      { "a": "A03", "b": "A10", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A04", "b": "A11", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A05", "b": "A12", "rule": "opposite_extremes", "axis": "culture_authority" },
-      { "a": "A06", "b": "A13", "rule": "opposite_extremes", "axis": "culture_authority" }
+      {
+        "a": "E02",
+        "b": "E11",
+        "rule": "opposite_extremes",
+        "axis": "economy"
+      },
+      {
+        "a": "E04",
+        "b": "E13",
+        "rule": "opposite_extremes",
+        "axis": "economy"
+      },
+      {
+        "a": "A04",
+        "b": "A11",
+        "rule": "opposite_extremes",
+        "axis": "authority"
+      },
+      {
+        "a": "A06",
+        "b": "A13",
+        "rule": "opposite_extremes",
+        "axis": "authority"
+      }
     ]
   },
   "items": [
-    { "id": "E01", "text_en": "Government should reduce class inequality by taxing very high incomes more.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E02", "text_en": "If we must choose, guaranteeing a minimum livelihood for everyone is more important than keeping taxes low.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E03", "text_en": "For some essential goods (like medicine), price regulation can be necessary.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E04", "text_en": "Worker wages and job security should be protected even if production costs rise.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E05", "text_en": "Basic education and healthcare should be widely accessible and affordable.", "wx": -2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E06", "text_en": "Government should deal firmly with large monopolies and economic rent-seeking.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E07", "text_en": "Environmental protection can justify limiting some economic activities.", "wx": -1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-
-    { "id": "E08", "text_en": "Free competition usually improves quality and prices better than government intervention.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E09", "text_en": "For economic growth, business regulation should be reduced even if some protections decline.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E10", "text_en": "Well-designed, transparent privatization can deliver services better than state management.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E11", "text_en": "If we must choose, keeping taxes low is more important than expanding welfare services.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E12", "text_en": "Large income differences are not always bad if they reflect effort and skill.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E13", "text_en": "The labor market should be flexible even if some people have less job security.", "wx": 2, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-    { "id": "E14", "text_en": "Government assistance should be limited and targeted to avoid dependency.", "wx": 1, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "economy" },
-
-    { "id": "A01", "text_en": "Freedom of speech should include unpleasant views as long as there is no threat or violence.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A02", "text_en": "People's privacy should be protected, even if stronger surveillance may improve security.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A03", "text_en": "Law should guarantee equal rights for women and men in work and public life.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A04", "text_en": "People should be free to choose their clothing as long as they do not harm others.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A05", "text_en": "Discrimination in work and public services against people with different sexual orientation or gender identity should not be legal.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A06", "text_en": "Ethnic/linguistic minorities should be able to preserve and use their mother tongue in education or media.", "wx": 0, "wy": -1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A07", "text_en": "Government should not interfere in consensual private relationships between adults.", "wx": 0, "wy": -2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "A08", "text_en": "For security and order, it is sometimes necessary to limit individual freedoms.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A09", "text_en": "Government should be able to strictly control gatherings and protests to prevent disorder.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A10", "text_en": "Public policy should encourage traditional family roles (e.g., breadwinner/homemaker).", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A11", "text_en": "Laws in public spaces should be stricter about behavior and dress to preserve public morality.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A12", "text_en": "The law should recognize marriage only between a man and a woman.", "wx": 0, "wy": 2, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A13", "text_en": "To preserve unity, minorities should adapt to the dominant culture rather than emphasize differences.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-    { "id": "A14", "text_en": "In crises, centralized and fast decision-making is more important than broad participation.", "wx": 0, "wy": 1, "wd": 0, "reverse_scored": false, "tag": "authority" },
-
-    { "id": "D01", "text_en": "Elections should be real, competitive, and allow transfer of power.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D02", "text_en": "Government should change only through people's votes and legal process.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D03", "text_en": "The judiciary should be independent and able to prevent abuse of power.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D04", "text_en": "Media should be able to criticize the government and powerful institutions freely.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D05", "text_en": "All citizens should have equal rights before the law, including minorities.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D06", "text_en": "Government should be transparent, with public oversight and independent reporting.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": false, "tag": "democracy" },
-    { "id": "D07", "text_en": "If national leaders decide, strong elections and parliament are no longer necessary.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
-    { "id": "D08", "text_en": "In some situations, military rule can be an appropriate solution.", "wx": 0, "wy": 0, "wd": 2, "reverse_scored": true, "tag": "democracy" },
-
-    { "id": "QC01", "text_en": "For quality control, please choose 'Agree' for this question.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "attention_check" },
-    { "id": "INF01", "text_en": "For major national decisions, we should flip a coin once a month to move faster.", "wx": 0, "wy": 0, "wd": 0, "reverse_scored": false, "tag": "infrequency" }
+    {
+      "id": "E01",
+      "text_en": "Government should reduce class inequality by taxing very high incomes more.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E02",
+      "text_en": "If we must choose, guaranteeing a minimum livelihood for everyone is more important than keeping taxes low.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E04",
+      "text_en": "Worker wages and job security should be protected even if production costs rise.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E05",
+      "text_en": "Government should guarantee access to basic education and healthcare for everyone, even if public spending rises somewhat.",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E06",
+      "text_en": "Strong regulation and oversight are needed to curb monopolies and rent-seeking, even if this makes business operations harder.",
+      "wx": -1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E08",
+      "text_en": "Free competition usually improves quality and prices better than government intervention.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E09",
+      "text_en": "For economic growth, business regulation should be reduced even if some protections decline.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E10",
+      "text_en": "Well-designed, transparent privatization can deliver services better than state management.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E11",
+      "text_en": "If we must choose, keeping taxes low is more important than expanding welfare services.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E13",
+      "text_en": "The labor market should be flexible even if some people have less job security.",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "E14",
+      "text_en": "Government assistance should be limited and targeted to avoid dependency.",
+      "wx": 1,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy"
+    },
+    {
+      "id": "A01",
+      "text_en": "Freedom of speech should include unpleasant views as long as there is no threat or violence.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A02",
+      "text_en": "People's privacy should be protected, even if stronger surveillance may improve security.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A03",
+      "text_en": "Law should guarantee equal rights for women and men in work and public life.",
+      "wx": 0,
+      "wy": -1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A04",
+      "text_en": "People should be free to choose their clothing as long as they do not harm others.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A05",
+      "text_en": "Discrimination in work and public services against people with different sexual orientation or gender identity should not be legal.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A06",
+      "text_en": "Ethnic/linguistic minorities should be able to preserve and use their mother tongue in education or media.",
+      "wx": 0,
+      "wy": -1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A07",
+      "text_en": "Government should not interfere in consensual private relationships between adults.",
+      "wx": 0,
+      "wy": -2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A08",
+      "text_en": "For public security, the state should be able to expand digital and urban surveillance even at some cost to privacy.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A11",
+      "text_en": "Laws in public spaces should be stricter about behavior and dress to preserve public morality.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A12",
+      "text_en": "The law should recognize marriage only between a man and a woman.",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "A13",
+      "text_en": "To preserve unity, minorities should adapt to the dominant culture rather than emphasize differences.",
+      "wx": 0,
+      "wy": 1,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority"
+    },
+    {
+      "id": "D01",
+      "text_en": "Elections should be real, competitive, and allow transfer of power.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D02",
+      "text_en": "Government should change only through people's votes and legal process.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D03",
+      "text_en": "The judiciary should be independent and able to prevent abuse of power.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D04",
+      "text_en": "Media should be able to criticize the government and powerful institutions freely.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D06",
+      "text_en": "Government should be transparent, with public oversight and independent reporting.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy"
+    },
+    {
+      "id": "D07",
+      "text_en": "If national leaders decide, strong elections and parliament are no longer necessary.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "D08",
+      "text_en": "In some situations, military rule can be an appropriate solution.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "D09",
+      "text_en": "Having a strong leader is more important than having independent and accountable institutions.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": true,
+      "tag": "democracy"
+    },
+    {
+      "id": "SE01",
+      "text_en": "Scenario: The government has 100 new budget units. Which policy mix do you prefer?",
+      "wx": 2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy",
+      "choices": [
+        {
+          "label_en": "Spend most on public housing/healthcare and direct support for low-income households.",
+          "label_fa": "بیشتر بودجه صرف مسکن/درمان عمومی و یارانه مستقیم خانوارهای کم‌درآمد شود.",
+          "value": -2
+        },
+        {
+          "label_en": "A support-leaning mix with some allocation to businesses.",
+          "label_fa": "ترکیبِ متمایل به حمایت اجتماعی با بخشی برای کسب‌وکارها.",
+          "value": -1
+        },
+        {
+          "label_en": "Split equally between social support and market incentives.",
+          "label_fa": "تقسیم برابر بین حمایت اجتماعی و مشوق‌های بازار.",
+          "value": 0
+        },
+        {
+          "label_en": "Focus more on tax cuts and investment incentives for firms.",
+          "label_fa": "تمرکز بیشتر بر کاهش مالیات و مشوق سرمایه‌گذاری شرکت‌ها.",
+          "value": 1
+        },
+        {
+          "label_en": "Use almost all of it for market liberalization, tax cuts, and shrinking state support.",
+          "label_fa": "تقریباً همه بودجه صرف آزادسازی بازار، کاهش مالیات و کوچک‌سازی حمایت‌های دولتی شود.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SA01",
+      "text_en": "Scenario: A large city sees widespread but mostly peaceful protests. What policy is best?",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority",
+      "choices": [
+        {
+          "label_en": "Prioritize assembly/speech rights and intervene only in cases of actual violence.",
+          "label_fa": "اولویت با حفظ حق تجمع/بیان باشد و مداخله فقط در موارد خشونت واقعی.",
+          "value": -2
+        },
+        {
+          "label_en": "Soft management with minimal restrictions and ongoing negotiation.",
+          "label_fa": "مدیریت نرم با محدودیت‌های حداقلی و مذاکره مستمر.",
+          "value": -1
+        },
+        {
+          "label_en": "A mixed approach with permits, time/place limits, and dialogue.",
+          "label_fa": "ترکیبی از مجوز، محدودیت زمانی/مکانی و گفت‌وگو.",
+          "value": 0
+        },
+        {
+          "label_en": "Stricter control to prevent disorder, even with tighter protest limits.",
+          "label_fa": "کنترل سخت‌گیرانه‌تر برای پیشگیری از بی‌نظمی، حتی با محدودیت آزادی تجمع.",
+          "value": 1
+        },
+        {
+          "label_en": "Maximum restriction of protests and broad immediate enforcement powers.",
+          "label_fa": "محدودسازی حداکثری اعتراضات و اختیار گسترده برای برخورد فوری.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SD01",
+      "text_en": "Scenario: During a security crisis, the government proposes to temporarily sideline parliament. Which option do you prefer?",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy",
+      "choices": [
+        {
+          "label_en": "Suspend parliament and elections for an open-ended period for fast decisions.",
+          "label_fa": "کنار گذاشتن پارلمان و انتخابات تا زمان نامعلوم برای سرعت تصمیم‌گیری.",
+          "value": -2
+        },
+        {
+          "label_en": "Grant long-term emergency powers to the executive with limited oversight.",
+          "label_fa": "اختیارات فوق‌العاده طولانی‌مدت برای دولت با نظارت محدود.",
+          "value": -1
+        },
+        {
+          "label_en": "Allow short emergency powers with periodic review.",
+          "label_fa": "اختیارات اضطراری کوتاه‌مدت با بازبینی دوره‌ای.",
+          "value": 0
+        },
+        {
+          "label_en": "Keep parliament/courts active and set a clear end date for emergency powers.",
+          "label_fa": "حفظ نقش پارلمان/دادگاه و زمان‌بندی روشن برای پایان وضعیت اضطراری.",
+          "value": 1
+        },
+        {
+          "label_en": "Even in crisis, preserve full parliamentary oversight, judicial independence, and political competition.",
+          "label_fa": "حتی در بحران، نظارت پارلمان و استقلال قضایی و امکان رقابت سیاسی باید کامل حفظ شود.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SE02",
+      "text_en": "Scenario: Urban rent prices have surged sharply. Which policy package do you prefer?",
+      "wx": -2,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "economy",
+      "choices": [
+        {
+          "label_en": "Rent caps, vacancy taxes, and large-scale social housing.",
+          "label_fa": "سقف اجاره، مالیات بر خانه‌های خالی و ساخت مسکن اجتماعی گسترده.",
+          "value": -2
+        },
+        {
+          "label_en": "A tenant-supporting mix with limited supply incentives.",
+          "label_fa": "ترکیبی از حمایت مستأجران با مشوق محدود برای عرضه بیشتر.",
+          "value": -1
+        },
+        {
+          "label_en": "Balanced mix of rent support and construction easing.",
+          "label_fa": "ترکیب برابر از حمایت اجاره و تسهیل ساخت‌وساز.",
+          "value": 0
+        },
+        {
+          "label_en": "Mainly deregulate construction and ease housing market rules.",
+          "label_fa": "تمرکز اصلی بر آزادسازی ساخت‌وساز و کاهش مقررات بازار مسکن.",
+          "value": 1
+        },
+        {
+          "label_en": "No price intervention; rely fully on market mechanisms.",
+          "label_fa": "عدم مداخله قیمتی؛ تکیه کامل بر مکانیزم بازار و رقابت سازندگان.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SA02",
+      "text_en": "Scenario: Urban crime has increased. Which policy package do you prefer?",
+      "wx": 0,
+      "wy": 2,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "authority",
+      "choices": [
+        {
+          "label_en": "Focus on social prevention and local empowerment with minimal punitive expansion.",
+          "label_fa": "تمرکز بر پیشگیری اجتماعی، آموزش و توانمندسازی محلات با کمترین سخت‌گیری کیفری.",
+          "value": -2
+        },
+        {
+          "label_en": "Limited policing increase with rehabilitation and strong judicial oversight.",
+          "label_fa": "افزایش محدود پلیس همراه با برنامه‌های بازپروری و نظارت قضایی قوی.",
+          "value": -1
+        },
+        {
+          "label_en": "Balanced mix of social prevention and law enforcement.",
+          "label_fa": "ترکیب متوازن از پیشگیری اجتماعی و اجرای قانون.",
+          "value": 0
+        },
+        {
+          "label_en": "Significantly expand police powers and urban surveillance.",
+          "label_fa": "افزایش محسوس اختیارات پلیس و نظارت شهری برای کنترل جرم.",
+          "value": 1
+        },
+        {
+          "label_en": "Maximum hardline policy: harsher penalties and broad security powers.",
+          "label_fa": "سیاست سخت‌گیرانه حداکثری: مجازات شدیدتر و اختیارات گسترده امنیتی.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "SD02",
+      "text_en": "Scenario: The government wants to limit critical media for six months. What is your position?",
+      "wx": 0,
+      "wy": 0,
+      "wd": 2,
+      "reverse_scored": false,
+      "tag": "democracy",
+      "choices": [
+        {
+          "label_en": "Fully restrict critical media to preserve \"stability\".",
+          "label_fa": "محدودسازی کامل رسانه‌های منتقد برای حفظ «ثبات».",
+          "value": -2
+        },
+        {
+          "label_en": "Broad but temporary restrictions with minimal oversight.",
+          "label_fa": "محدودیت گسترده اما موقت با نظارت حداقلی.",
+          "value": -1
+        },
+        {
+          "label_en": "Very limited, short-term restrictions with judicial review.",
+          "label_fa": "محدودیت بسیار محدود، کوتاه‌مدت و قابل بازبینی قضایی.",
+          "value": 0
+        },
+        {
+          "label_en": "Protect media freedom with accountability and legal complaint channels.",
+          "label_fa": "حفظ آزادی رسانه با سازوکار پاسخگویی و حق شکایت قانونی.",
+          "value": 1
+        },
+        {
+          "label_en": "No political media restrictions; criticism must remain possible even in crisis.",
+          "label_fa": "عدم محدودیت سیاسی رسانه؛ حتی در بحران هم نقد حکومت باید ممکن باشد.",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "QC01",
+      "text_en": "For quality control, please choose 'Agree' for this question.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "attention_check"
+    },
+    {
+      "id": "INF01",
+      "text_en": "For major national decisions, we should flip a coin once a month to move faster.",
+      "wx": 0,
+      "wy": 0,
+      "wd": 0,
+      "reverse_scored": false,
+      "tag": "infrequency"
+    }
   ]
 }

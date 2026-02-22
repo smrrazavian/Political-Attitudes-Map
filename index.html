@@ -166,6 +166,8 @@
         <div class="card">
           <div class="plotWrap">
             <div class="muted small">نقشه‌ی دوبعدی (X اقتصاد، Y آزادی/اقتدار)</div>
+            <div class="refsFilter" id="refsFilter" aria-label="فیلتر افراد مرجع"></div>
+            <div class="plotLegend" id="plotLegend" aria-label="راهنمای نمادهای نقشه"></div>
             <svg id="plot" class="plot" viewBox="0 0 360 360" aria-label="نمودار جایگاه روی نقشه"></svg>
             <div class="muted" id="quadrantText">...</div>
           </div>
@@ -203,6 +205,20 @@
             <div class="muted small mt8">
               این شاخص «حقیقت‌سنجی» نیست. فقط می‌گوید ممکن است بعضی پاسخ‌ها محتاطانه‌تر شده باشد.
             </div>
+          </div>
+
+          <div class="pill mt10">
+            <div class="refsHead">
+              <div class="k" id="refsTitle">افراد مرجع روی نقشه (تقریبی)</div>
+              <div class="rowWrap">
+                <span class="muted small" id="refsCount">0</span>
+                <button class="btn small" id="btnToggleRefs" type="button" aria-expanded="false">نمایش لیست مرجع‌ها</button>
+              </div>
+            </div>
+            <div class="muted small mt8" id="refsNote">
+              جایگاه این افراد تقریبی و آموزشی است؛ قطعی، تاریخیِ دقیق، یا مورد اجماع کامل نیست.
+            </div>
+            <div class="refsList mt10" id="referenceList"></div>
           </div>
         </div>
 
